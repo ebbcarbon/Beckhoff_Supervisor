@@ -1,8 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="General" Id="{afd5554c-a122-45cd-a612-91df6056dfdf}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM General
-VAR
+  <POU Name="general" Id="{afd5554c-a122-45cd-a612-91df6056dfdf}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM general
+VAR PERSISTENT
+	//System date time function block
+	system_date_time : date_time;
+	//Daily reset bit, used throughout the program for any resets
+	daily_reset : BOOL;
+	//Alarm Acknoweldge unlatch timer
+	alarm_ack_ton : ton;
+	//Alarm Reset unlatch timer
+	alarm_reset_ton : ton;
+	//Alarm Ack and reset unlatch timer setpoint
+	alarm_ack_unlatch_sp : TIME :=T#3s;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -34,23 +45,23 @@ END_VAR
                           <v n="Address">""</v>
                           <o n="Flags" t="Flags">
                             <v n="Flags">0</v>
-                            <v n="Fixed">false</v>
+                            <v n="Fixed">true</v>
                             <v n="Extensible">false</v>
                           </o>
                           <v n="LValue">false</v>
-                          <v n="Boolean">false</v>
+                          <v n="Boolean">true</v>
                           <v n="IsInstance">false</v>
-                          <v n="Id">162L</v>
+                          <v n="Id">5L</v>
                         </o>
-                        <v n="Id">161L</v>
+                        <v n="Id">4L</v>
                       </o>
-                      <v n="Id">177L</v>
+                      <v n="Id">3L</v>
                     </o>
                     <o t="BoxTreeBox">
-                      <v n="BoxType">"Date_Time"</v>
+                      <v n="BoxType">"date_time"</v>
                       <o n="Instance" t="Operand">
-                        <v n="Operand">"GVL.System_Date_Time"</v>
-                        <v n="Type">"Date_Time"</v>
+                        <v n="Operand">"system_date_time"</v>
+                        <v n="Type">""</v>
                         <v n="Comment">""</v>
                         <v n="SymbolComment">""</v>
                         <v n="Address">""</v>
@@ -62,112 +73,112 @@ END_VAR
                         <v n="LValue">false</v>
                         <v n="Boolean">false</v>
                         <v n="IsInstance">true</v>
-                        <v n="Id">175L</v>
+                        <v n="Id">6L</v>
                       </o>
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <n />
                           <o>
-                            <v n="Operand">"GVL.System_Year"</v>
-                            <v n="Type">"INT"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">160L</v>
+                            <v n="Id">8L</v>
                           </o>
                           <o>
-                            <v n="Operand">"GVL.System_Month"</v>
-                            <v n="Type">"INT"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">170L</v>
+                            <v n="Id">9L</v>
                           </o>
                           <o>
-                            <v n="Operand">"GVL.System_Day"</v>
-                            <v n="Type">"INT"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">171L</v>
+                            <v n="Id">10L</v>
                           </o>
                           <o>
-                            <v n="Operand">"GVL.System_Hour"</v>
-                            <v n="Type">"INT"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">172L</v>
+                            <v n="Id">11L</v>
                           </o>
                           <o>
-                            <v n="Operand">"GVL.System_Minute"</v>
-                            <v n="Type">"INT"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">173L</v>
+                            <v n="Id">12L</v>
                           </o>
                           <o>
-                            <v n="Operand">"GVL.System_Second"</v>
-                            <v n="Type">"INT"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">174L</v>
+                            <v n="Id">13L</v>
                           </o>
                         </l2>
                       </o>
                       <o n="Flags" t="Flags">
                         <v n="Flags">0</v>
-                        <v n="Fixed">true</v>
+                        <v n="Fixed">false</v>
                         <v n="Extensible">false</v>
                       </o>
                       <n n="InputFlags" />
@@ -175,7 +186,7 @@ END_VAR
                         <o>
                           <v n="VarId">4</v>
                           <n n="Input" />
-                          <v n="Id">178L</v>
+                          <v n="Id">14L</v>
                         </o>
                       </l2>
                       <o n="InputParam" t="ParamList">
@@ -183,27 +194,27 @@ END_VAR
                           <v>EN</v>
                         </l2>
                         <l2 n="Types" cet="String">
-                          <v>BOOL</v>
+                          <v></v>
                         </l2>
                       </o>
                       <o n="OutputParam" t="ParamList">
                         <l2 n="Names" cet="String">
                           <v>ENO</v>
-                          <v>Year</v>
-                          <v>Month</v>
-                          <v>Day</v>
-                          <v>Hour</v>
-                          <v>Minute</v>
-                          <v>Second</v>
+                          <v>year</v>
+                          <v>month</v>
+                          <v>day</v>
+                          <v>hour</v>
+                          <v>minute</v>
+                          <v>second</v>
                         </l2>
                         <l2 n="Types" cet="String">
-                          <v>BOOL</v>
-                          <v>INT</v>
-                          <v>INT</v>
-                          <v>INT</v>
-                          <v>INT</v>
-                          <v>INT</v>
-                          <v>INT</v>
+                          <v></v>
+                          <v></v>
+                          <v></v>
+                          <v></v>
+                          <v></v>
+                          <v></v>
+                          <v></v>
                         </l2>
                       </o>
                       <v n="CallType" t="Operator">FunctionBlock</v>
@@ -212,26 +223,26 @@ END_VAR
                       <n n="STSnippet" />
                       <v n="ContainsExtensibleInputs">false</v>
                       <v n="ProvidesSTSnippet">false</v>
-                      <v n="Id">176L</v>
+                      <v n="Id">7L</v>
                     </o>
                     <o t="BoxTreeAssign">
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"GVL.Daily_Reset"</v>
+                            <v n="Operand">"daily_reset"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">true</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">198L</v>
+                            <v n="Id">34L</v>
                           </o>
                         </l2>
                       </o>
@@ -256,7 +267,7 @@ END_VAR
                           <v n="LValue">false</v>
                           <v n="Boolean">false</v>
                           <v n="IsInstance">true</v>
-                          <v n="Id">192L</v>
+                          <v n="Id">15L</v>
                         </o>
                         <o n="OutputItems" t="OutputItemList">
                           <l2 n="OutputItems">
@@ -286,7 +297,7 @@ END_VAR
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
                               <v n="IsInstance">true</v>
-                              <v n="Id">186L</v>
+                              <v n="Id">17L</v>
                             </o>
                             <o n="OutputItems" t="OutputItemList">
                               <l2 n="OutputItems">
@@ -316,7 +327,7 @@ END_VAR
                                   <v n="LValue">false</v>
                                   <v n="Boolean">false</v>
                                   <v n="IsInstance">true</v>
-                                  <v n="Id">180L</v>
+                                  <v n="Id">19L</v>
                                 </o>
                                 <o n="OutputItems" t="OutputItemList">
                                   <l2 n="OutputItems">
@@ -333,45 +344,45 @@ END_VAR
                                   <o t="BoxTreeDemux">
                                     <v n="VarId">4</v>
                                     <n n="Input" />
-                                    <v n="Id">179L</v>
+                                    <v n="Id">21L</v>
                                   </o>
                                   <o t="BoxTreeOperand">
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"GVL.System_Hour"</v>
-                                      <v n="Type">"INT"</v>
+                                      <v n="Operand">"system_date_time.hour"</v>
+                                      <v n="Type">""</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
                                       <v n="Address">""</v>
                                       <o n="Flags" t="Flags">
                                         <v n="Flags">0</v>
-                                        <v n="Fixed">false</v>
+                                        <v n="Fixed">true</v>
                                         <v n="Extensible">false</v>
                                       </o>
                                       <v n="LValue">false</v>
                                       <v n="Boolean">false</v>
                                       <v n="IsInstance">false</v>
-                                      <v n="Id">183L</v>
+                                      <v n="Id">23L</v>
                                     </o>
-                                    <v n="Id">182L</v>
+                                    <v n="Id">22L</v>
                                   </o>
                                   <o t="BoxTreeOperand">
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"GVL.Daily_Reset_Hour_Setpoint"</v>
-                                      <v n="Type">"INT"</v>
+                                      <v n="Operand">"opc.popa_0081_daily_reset_hour_setpoint"</v>
+                                      <v n="Type">""</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
                                       <v n="Address">""</v>
                                       <o n="Flags" t="Flags">
                                         <v n="Flags">0</v>
-                                        <v n="Fixed">false</v>
+                                        <v n="Fixed">true</v>
                                         <v n="Extensible">false</v>
                                       </o>
                                       <v n="LValue">false</v>
                                       <v n="Boolean">false</v>
                                       <v n="IsInstance">false</v>
-                                      <v n="Id">185L</v>
+                                      <v n="Id">25L</v>
                                     </o>
-                                    <v n="Id">184L</v>
+                                    <v n="Id">24L</v>
                                   </o>
                                 </l2>
                                 <o n="InputParam" t="ParamList">
@@ -379,7 +390,7 @@ END_VAR
                                     <v>EN</v>
                                   </l2>
                                   <l2 n="Types" cet="String">
-                                    <v>BOOL</v>
+                                    <v></v>
                                   </l2>
                                 </o>
                                 <o n="OutputParam" t="ParamList">
@@ -387,54 +398,54 @@ END_VAR
                                     <v></v>
                                   </l2>
                                   <l2 n="Types" cet="String">
-                                    <v>BOOL</v>
+                                    <v></v>
                                   </l2>
                                 </o>
                                 <v n="CallType" t="Operator">Eq</v>
                                 <v n="EN">true</v>
-                                <v n="ENO">false</v>
+                                <n n="ENO" />
                                 <n n="STSnippet" />
                                 <v n="ContainsExtensibleInputs">false</v>
                                 <v n="ProvidesSTSnippet">false</v>
-                                <v n="Id">181L</v>
+                                <v n="Id">20L</v>
                               </o>
                               <o t="BoxTreeOperand">
                                 <o n="Operand" t="Operand">
-                                  <v n="Operand">"GVL.System_Minute"</v>
-                                  <v n="Type">"INT"</v>
+                                  <v n="Operand">"system_date_time.minute"</v>
+                                  <v n="Type">""</v>
                                   <v n="Comment">""</v>
                                   <v n="SymbolComment">""</v>
                                   <v n="Address">""</v>
                                   <o n="Flags" t="Flags">
                                     <v n="Flags">0</v>
-                                    <v n="Fixed">false</v>
+                                    <v n="Fixed">true</v>
                                     <v n="Extensible">false</v>
                                   </o>
                                   <v n="LValue">false</v>
                                   <v n="Boolean">false</v>
                                   <v n="IsInstance">false</v>
-                                  <v n="Id">189L</v>
+                                  <v n="Id">27L</v>
                                 </o>
-                                <v n="Id">188L</v>
+                                <v n="Id">26L</v>
                               </o>
                               <o t="BoxTreeOperand">
                                 <o n="Operand" t="Operand">
-                                  <v n="Operand">"GVL.Daily_Reset_Minute_Setpoint"</v>
-                                  <v n="Type">"INT"</v>
+                                  <v n="Operand">"opc.popa_0081_daily_reset_minute_setpoint"</v>
+                                  <v n="Type">""</v>
                                   <v n="Comment">""</v>
                                   <v n="SymbolComment">""</v>
                                   <v n="Address">""</v>
                                   <o n="Flags" t="Flags">
                                     <v n="Flags">0</v>
-                                    <v n="Fixed">false</v>
+                                    <v n="Fixed">true</v>
                                     <v n="Extensible">false</v>
                                   </o>
                                   <v n="LValue">false</v>
                                   <v n="Boolean">false</v>
                                   <v n="IsInstance">false</v>
-                                  <v n="Id">191L</v>
+                                  <v n="Id">29L</v>
                                 </o>
-                                <v n="Id">190L</v>
+                                <v n="Id">28L</v>
                               </o>
                             </l2>
                             <o n="InputParam" t="ParamList">
@@ -442,7 +453,7 @@ END_VAR
                                 <v>EN</v>
                               </l2>
                               <l2 n="Types" cet="String">
-                                <v>BOOL</v>
+                                <v></v>
                               </l2>
                             </o>
                             <o n="OutputParam" t="ParamList">
@@ -450,54 +461,54 @@ END_VAR
                                 <v></v>
                               </l2>
                               <l2 n="Types" cet="String">
-                                <v>BOOL</v>
+                                <v></v>
                               </l2>
                             </o>
                             <v n="CallType" t="Operator">Eq</v>
                             <v n="EN">true</v>
-                            <v n="ENO">false</v>
+                            <n n="ENO" />
                             <n n="STSnippet" />
                             <v n="ContainsExtensibleInputs">false</v>
                             <v n="ProvidesSTSnippet">false</v>
-                            <v n="Id">187L</v>
+                            <v n="Id">18L</v>
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"GVL.System_Second"</v>
-                              <v n="Type">"INT"</v>
+                              <v n="Operand">"system_date_time.second"</v>
+                              <v n="Type">""</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
                               <o n="Flags" t="Flags">
                                 <v n="Flags">0</v>
-                                <v n="Fixed">false</v>
+                                <v n="Fixed">true</v>
                                 <v n="Extensible">false</v>
                               </o>
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
                               <v n="IsInstance">false</v>
-                              <v n="Id">195L</v>
+                              <v n="Id">31L</v>
                             </o>
-                            <v n="Id">194L</v>
+                            <v n="Id">30L</v>
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
                               <v n="Operand">"0"</v>
-                              <v n="Type">"INT"</v>
+                              <v n="Type">""</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
                               <o n="Flags" t="Flags">
                                 <v n="Flags">0</v>
-                                <v n="Fixed">false</v>
+                                <v n="Fixed">true</v>
                                 <v n="Extensible">false</v>
                               </o>
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
                               <v n="IsInstance">false</v>
-                              <v n="Id">197L</v>
+                              <v n="Id">33L</v>
                             </o>
-                            <v n="Id">196L</v>
+                            <v n="Id">32L</v>
                           </o>
                         </l2>
                         <o n="InputParam" t="ParamList">
@@ -505,7 +516,7 @@ END_VAR
                             <v>EN</v>
                           </l2>
                           <l2 n="Types" cet="String">
-                            <v>BOOL</v>
+                            <v></v>
                           </l2>
                         </o>
                         <o n="OutputParam" t="ParamList">
@@ -513,22 +524,22 @@ END_VAR
                             <v></v>
                           </l2>
                           <l2 n="Types" cet="String">
-                            <v>BOOL</v>
+                            <v></v>
                           </l2>
                         </o>
                         <v n="CallType" t="Operator">Eq</v>
                         <v n="EN">true</v>
-                        <v n="ENO">false</v>
+                        <n n="ENO" />
                         <n n="STSnippet" />
                         <v n="ContainsExtensibleInputs">false</v>
                         <v n="ProvidesSTSnippet">false</v>
-                        <v n="Id">193L</v>
+                        <v n="Id">16L</v>
                       </o>
-                      <v n="Id">199L</v>
+                      <v n="Id">35L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
-                  <v n="Id">157L</v>
+                  <v n="Id">2L</v>
                 </o>
                 <o>
                   <v n="ILActive">false</v>
@@ -537,14 +548,14 @@ END_VAR
                   <l2 n="ILLines" />
                   <v n="Comment">""</v>
                   <v n="Title">""</v>
-                  <v n="Label">"//The ALM_Ack bit is set by the HMI.  These rungs clear it after 1 Second.  Reset also acts as an Acknowledge."</v>
+                  <v n="Label">"//The ALM_Ack bit is set by the HMI.  These rungs clear it after 1 Second."</v>
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems" cet="BoxTreeBox">
                     <o>
                       <v n="BoxType">"TON"</v>
                       <o n="Instance" t="Operand">
-                        <v n="Operand">"GVL.ALM_Ack_TON"</v>
-                        <v n="Type">"TON"</v>
+                        <v n="Operand">"alarm_ack_ton"</v>
+                        <v n="Type">""</v>
                         <v n="Comment">""</v>
                         <v n="SymbolComment">""</v>
                         <v n="Address">""</v>
@@ -556,26 +567,26 @@ END_VAR
                         <v n="LValue">false</v>
                         <v n="Boolean">false</v>
                         <v n="IsInstance">true</v>
-                        <v n="Id">204L</v>
+                        <v n="Id">37L</v>
                       </o>
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <n />
                           <o>
-                            <v n="Operand">"GVL.ALM_Ack_TON_ET"</v>
-                            <v n="Type">"TIME"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">206L</v>
+                            <v n="Id">39L</v>
                           </o>
                         </l2>
                       </o>
@@ -585,108 +596,44 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <n n="InputFlags" />
-                      <l2 n="InputItems">
-                        <o t="BoxTreeBox">
-                          <v n="BoxType">"OR"</v>
-                          <o n="Instance" t="Operand">
-                            <n n="Operand" />
+                      <l2 n="InputItems" cet="BoxTreeOperand">
+                        <o>
+                          <o n="Operand" t="Operand">
+                            <v n="Operand">"opc.popa_0081_alarm_ack"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">0</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">false</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">41L</v>
+                          </o>
+                          <v n="Id">40L</v>
+                        </o>
+                        <o>
+                          <o n="Operand" t="Operand">
+                            <v n="Operand">"alarm_ack_unlatch_sp"</v>
                             <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
-                              <v n="Extensible">false</v>
-                            </o>
-                            <v n="LValue">false</v>
-                            <v n="Boolean">false</v>
-                            <v n="IsInstance">true</v>
-                            <v n="Id">241L</v>
-                          </o>
-                          <o n="OutputItems" t="OutputItemList">
-                            <l2 n="OutputItems" />
-                          </o>
-                          <o n="Flags" t="Flags">
-                            <v n="Flags">0</v>
-                            <v n="Fixed">false</v>
-                            <v n="Extensible">false</v>
-                          </o>
-                          <n n="InputFlags" />
-                          <l2 n="InputItems" cet="BoxTreeOperand">
-                            <o>
-                              <o n="Operand" t="Operand">
-                                <v n="Operand">"GVL.ALM_Ack"</v>
-                                <v n="Type">"BOOL"</v>
-                                <v n="Comment">""</v>
-                                <v n="SymbolComment">""</v>
-                                <v n="Address">""</v>
-                                <o n="Flags" t="Flags">
-                                  <v n="Flags">0</v>
-                                  <v n="Fixed">true</v>
-                                  <v n="Extensible">false</v>
-                                </o>
-                                <v n="LValue">false</v>
-                                <v n="Boolean">true</v>
-                                <v n="IsInstance">false</v>
-                                <v n="Id">203L</v>
-                              </o>
-                              <v n="Id">202L</v>
-                            </o>
-                            <o>
-                              <o n="Operand" t="Operand">
-                                <v n="Operand">"GVL.ALM_Reset"</v>
-                                <v n="Type">"BOOL"</v>
-                                <v n="Comment">""</v>
-                                <v n="SymbolComment">""</v>
-                                <v n="Address">""</v>
-                                <o n="Flags" t="Flags">
-                                  <v n="Flags">0</v>
-                                  <v n="Fixed">true</v>
-                                  <v n="Extensible">false</v>
-                                </o>
-                                <v n="LValue">false</v>
-                                <v n="Boolean">true</v>
-                                <v n="IsInstance">false</v>
-                                <v n="Id">244L</v>
-                              </o>
-                              <v n="Id">243L</v>
-                            </o>
-                          </l2>
-                          <o n="InputParam" t="ParamList">
-                            <l2 n="Names" />
-                            <l2 n="Types" />
-                          </o>
-                          <o n="OutputParam" t="ParamList">
-                            <l2 n="Names" />
-                            <l2 n="Types" />
-                          </o>
-                          <v n="CallType" t="Operator">Or</v>
-                          <n n="EN" />
-                          <n n="ENO" />
-                          <n n="STSnippet" />
-                          <v n="ContainsExtensibleInputs">false</v>
-                          <v n="ProvidesSTSnippet">false</v>
-                          <v n="Id">242L</v>
-                        </o>
-                        <o t="BoxTreeOperand">
-                          <o n="Operand" t="Operand">
-                            <v n="Operand">"GVL.ALM_Ack_TON_PT"</v>
-                            <v n="Type">"TIME"</v>
-                            <v n="Comment">""</v>
-                            <v n="SymbolComment">""</v>
-                            <v n="Address">""</v>
-                            <o n="Flags" t="Flags">
-                              <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
                             <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">208L</v>
+                            <v n="Id">43L</v>
                           </o>
-                          <v n="Id">207L</v>
+                          <v n="Id">42L</v>
                         </o>
                       </l2>
                       <o n="InputParam" t="ParamList">
@@ -695,8 +642,8 @@ END_VAR
                           <v>PT</v>
                         </l2>
                         <l2 n="Types" cet="String">
-                          <v>BOOL</v>
-                          <v>TIME</v>
+                          <v></v>
+                          <v></v>
                         </l2>
                       </o>
                       <o n="OutputParam" t="ParamList">
@@ -705,21 +652,21 @@ END_VAR
                           <v>ET</v>
                         </l2>
                         <l2 n="Types" cet="String">
-                          <v>BOOL</v>
-                          <v>TIME</v>
+                          <v></v>
+                          <v></v>
                         </l2>
                       </o>
                       <v n="CallType" t="Operator">FunctionBlock</v>
-                      <v n="EN">false</v>
-                      <v n="ENO">false</v>
+                      <n n="EN" />
+                      <n n="ENO" />
                       <n n="STSnippet" />
                       <v n="ContainsExtensibleInputs">false</v>
                       <v n="ProvidesSTSnippet">false</v>
-                      <v n="Id">205L</v>
+                      <v n="Id">38L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
-                  <v n="Id">201L</v>
+                  <v n="Id">36L</v>
                 </o>
                 <o>
                   <v n="ILActive">false</v>
@@ -735,7 +682,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"GVL.ALM_Ack"</v>
+                            <v n="Operand">"opc.popa_0081_alarm_ack"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -745,10 +692,10 @@ END_VAR
                               <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">true</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">236L</v>
+                            <v n="Id">47L</v>
                           </o>
                         </l2>
                       </o>
@@ -759,7 +706,7 @@ END_VAR
                       </o>
                       <o n="RValue" t="BoxTreeOperand">
                         <o n="Operand" t="Operand">
-                          <v n="Operand">"GVL.ALM_Ack_TON.Q"</v>
+                          <v n="Operand">"alarm_ack_ton.Q"</v>
                           <v n="Type">"BOOL"</v>
                           <v n="Comment">""</v>
                           <v n="SymbolComment">""</v>
@@ -772,15 +719,15 @@ END_VAR
                           <v n="LValue">false</v>
                           <v n="Boolean">true</v>
                           <v n="IsInstance">false</v>
-                          <v n="Id">235L</v>
+                          <v n="Id">46L</v>
                         </o>
-                        <v n="Id">234L</v>
+                        <v n="Id">45L</v>
                       </o>
-                      <v n="Id">237L</v>
+                      <v n="Id">48L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
-                  <v n="Id">233L</v>
+                  <v n="Id">44L</v>
                 </o>
                 <o>
                   <v n="ILActive">false</v>
@@ -795,8 +742,8 @@ END_VAR
                     <o>
                       <v n="BoxType">"TON"</v>
                       <o n="Instance" t="Operand">
-                        <v n="Operand">"GVL.ALM_Reset_TON"</v>
-                        <v n="Type">"TON"</v>
+                        <v n="Operand">"alarm_reset_ton"</v>
+                        <v n="Type">""</v>
                         <v n="Comment">""</v>
                         <v n="SymbolComment">""</v>
                         <v n="Address">""</v>
@@ -808,26 +755,26 @@ END_VAR
                         <v n="LValue">false</v>
                         <v n="Boolean">false</v>
                         <v n="IsInstance">true</v>
-                        <v n="Id">221L</v>
+                        <v n="Id">50L</v>
                       </o>
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <n />
                           <o>
-                            <v n="Operand">"GVL.ALM_Reset_TON_ET"</v>
-                            <v n="Type">"TIME"</v>
+                            <v n="Operand">""</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">223L</v>
+                            <v n="Id">52L</v>
                           </o>
                         </l2>
                       </o>
@@ -840,7 +787,7 @@ END_VAR
                       <l2 n="InputItems" cet="BoxTreeOperand">
                         <o>
                           <o n="Operand" t="Operand">
-                            <v n="Operand">"GVL.ALM_Reset"</v>
+                            <v n="Operand">"opc.popa_0081_alarm_reset"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -853,28 +800,28 @@ END_VAR
                             <v n="LValue">false</v>
                             <v n="Boolean">true</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">225L</v>
+                            <v n="Id">54L</v>
                           </o>
-                          <v n="Id">224L</v>
+                          <v n="Id">53L</v>
                         </o>
                         <o>
                           <o n="Operand" t="Operand">
-                            <v n="Operand">"GVL.ALM_Reset_TON_PT"</v>
-                            <v n="Type">"TIME"</v>
+                            <v n="Operand">"alarm_ack_unlatch_sp"</v>
+                            <v n="Type">""</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
                             <v n="Address">""</v>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
                             <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">227L</v>
+                            <v n="Id">56L</v>
                           </o>
-                          <v n="Id">226L</v>
+                          <v n="Id">55L</v>
                         </o>
                       </l2>
                       <o n="InputParam" t="ParamList">
@@ -883,8 +830,8 @@ END_VAR
                           <v>PT</v>
                         </l2>
                         <l2 n="Types" cet="String">
-                          <v>BOOL</v>
-                          <v>TIME</v>
+                          <v></v>
+                          <v></v>
                         </l2>
                       </o>
                       <o n="OutputParam" t="ParamList">
@@ -893,21 +840,21 @@ END_VAR
                           <v>ET</v>
                         </l2>
                         <l2 n="Types" cet="String">
-                          <v>BOOL</v>
-                          <v>TIME</v>
+                          <v></v>
+                          <v></v>
                         </l2>
                       </o>
                       <v n="CallType" t="Operator">FunctionBlock</v>
-                      <v n="EN">false</v>
-                      <v n="ENO">false</v>
+                      <n n="EN" />
+                      <n n="ENO" />
                       <n n="STSnippet" />
                       <v n="ContainsExtensibleInputs">false</v>
                       <v n="ProvidesSTSnippet">false</v>
-                      <v n="Id">222L</v>
+                      <v n="Id">51L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
-                  <v n="Id">220L</v>
+                  <v n="Id">49L</v>
                 </o>
                 <o>
                   <v n="ILActive">false</v>
@@ -923,7 +870,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"GVL.ALM_Reset"</v>
+                            <v n="Operand">"opc.popa_0081_alarm_reset"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -933,10 +880,10 @@ END_VAR
                               <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
-                            <v n="LValue">true</v>
+                            <v n="LValue">false</v>
                             <v n="Boolean">true</v>
                             <v n="IsInstance">false</v>
-                            <v n="Id">218L</v>
+                            <v n="Id">60L</v>
                           </o>
                         </l2>
                       </o>
@@ -947,7 +894,7 @@ END_VAR
                       </o>
                       <o n="RValue" t="BoxTreeOperand">
                         <o n="Operand" t="Operand">
-                          <v n="Operand">"GVL.ALM_Reset_TON.Q"</v>
+                          <v n="Operand">"alarm_reset_ton.Q"</v>
                           <v n="Type">"BOOL"</v>
                           <v n="Comment">""</v>
                           <v n="SymbolComment">""</v>
@@ -960,15 +907,15 @@ END_VAR
                           <v n="LValue">false</v>
                           <v n="Boolean">true</v>
                           <v n="IsInstance">false</v>
-                          <v n="Id">217L</v>
+                          <v n="Id">59L</v>
                         </o>
-                        <v n="Id">216L</v>
+                        <v n="Id">58L</v>
                       </o>
-                      <v n="Id">219L</v>
+                      <v n="Id">61L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
-                  <v n="Id">215L</v>
+                  <v n="Id">57L</v>
                 </o>
               </l2>
               <v n="BranchCounter">5</v>

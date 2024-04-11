@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="valve_analog_control_st" Id="{687397f5-3c81-4587-973c-34cb591a9a0c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM valve_analog_control_st
+VAR PERSISTENT
+	// Example Analog Valve Function Block
+	av_3148: valve_analog;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Instantiate valve analog function block, and map inputs
+av_3148();
+av_3148.position_feedback:=io_mapping.av_3148_position_feedback.scaled_value;
+av_3148.position_request:=example_loop_control.av_3148_position_request;
+av_3148.position_deadband_sp:=opc.popa_0081_av_3148_position_deadband_sp;
+av_3148.position_faulted:=opc.popa_0081_av_3148_position_faulted;
+
+//Generic valve fault collector.  If any valve related faults are true, set the function block fault status to true
+IF faults.av_3148_position_fail.active=TRUE THEN
+	av_3148.fault:=TRUE;
+	ELSE
+		av_3148.fault:=FALSE;
+	END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

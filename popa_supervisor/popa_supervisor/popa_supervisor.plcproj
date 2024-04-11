@@ -19,54 +19,86 @@
     <Released>false</Released>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GVLs\GVL.TcGVL">
+    <Compile Include="GVLs\GVLs\opc.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Communications.TcPOU">
+    <Compile Include="POUs\POUs\communications.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Faults.TcPOU">
+    <Compile Include="POUs\POUs\example_loop_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Alarm.TcPOU">
+    <Compile Include="POUs\POUs\faults.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Analog_Scaling.TcPOU">
+    <Compile Include="POUs\POUs\Function Blocks\alarm.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Date_Time.TcPOU">
+    <Compile Include="POUs\POUs\Function Blocks\analog_scaling.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Motor_Starter.TcPOU">
+    <Compile Include="POUs\POUs\Function Blocks\date_time.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Motor_VFD.TcPOU">
+    <Compile Include="POUs\POUs\Function Blocks\motor_starter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Valve_Analog.TcPOU">
+    <Compile Include="POUs\POUs\Function Blocks\motor_vfd.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Valve_Digital.TcPOU">
+    <Compile Include="POUs\POUs\general.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\General.TcPOU">
+    <Compile Include="POUs\POUs\interlocks.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Analog_IO_Mapping.TcPOU">
+    <Compile Include="POUs\POUs\io_mapping.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Motor_Example.TcPOU">
+    <Compile Include="POUs\POUs\motor_starter_control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\motor_starter_control_st.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\motor_vfd_control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\motor_vfd_control_st.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\opc_control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\opc_mapping.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\state_transition.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\valve_analog_control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\valve_analog_control_st.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\valve_digital_control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\valve_digital_control_st.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\Function Blocks" />
+    <Folder Include="GVLs\GVLs" />
+    <Folder Include="POUs\POUs" />
+    <Folder Include="POUs\POUs\Function Blocks" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -81,11 +113,17 @@
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Utilities">
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryReference Include="Tc2_OpcUa,3.3.2.0,Beckhoff Automation GmbH">
+      <Namespace>Tc2_OpcUa</Namespace>
+    </LibraryReference>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

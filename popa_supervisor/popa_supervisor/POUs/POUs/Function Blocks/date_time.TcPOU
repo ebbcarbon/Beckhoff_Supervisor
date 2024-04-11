@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="date_time" Id="{5ee979e6-3205-42dd-8f77-139246a5cc59}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK date_time
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	year : INT;
+	month : INT;
+	day : INT;
+	hour : INT;
+	minute : INT;
+	second : INT;
+END_VAR
+VAR
+	get_system_time : GETSYSTEMTIME;    (*timestamp*)
+    file_time        : T_FILETIME;
+    sdt: STRING(30);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Get Timestamp from System
+get_system_time(timeLoDW => file_time.dwLowDateTime, timeHiDW => file_time.dwHighDateTime);
+//Convert from systemtime to string, this makes it easier to break out into Ints for Logic usage.
+sdt := SYSTEMTIME_TO_STRING(FILETIME_TO_SYSTEMTIME(file_time));
+//Breakout string into individual Ints.
+year := STRING_TO_INT(LEFT(sdt, 4));
+month := STRING_TO_INT(MID(sdt, 2, 6));
+day := STRING_TO_INT(MID(sdt, 2, 9));
+hour := STRING_TO_INT(MID(sdt, 2, 12));
+minute := STRING_TO_INT(MID(sdt, 2, 15));
+second := STRING_TO_INT(MID(sdt, 2, 18));]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

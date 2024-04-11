@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="motor_vfd_control_st" Id="{a46dfc99-89d7-4ba2-a2c1-28118d28ec13}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM motor_vfd_control_st
+VAR PERSISTENT
+	//Example motor starter block.  
+	u_3112 : motor_vfd;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Instantiate motor vfd function block, and map inputs
+u_3112();
+u_3112.run_feedback:=io_mapping.u_3112_run_feedback;
+u_3112.runtime_maint_reset:=opc.popa_0081_u_3112_runtime_maint_reset;
+u_3112.run_request:=example_loop_control.u_3112_run_request;
+u_3112.daily_reset:=general.daily_reset;
+
+//Generic pump fault collector.  If any pump related faults are true, set the function block fault status to true
+IF faults.u_3112_fail_to_start.active=TRUE OR faults.u_3112_fail_to_stop.active=TRUE THEN
+	u_3112.fault:=TRUE;
+	ELSE
+		u_3112.fault:=FALSE;
+	END_IF
+	
+//Reset runtime maint reset after cycle
+IF opc.popa_0081_u_3112_runtime_maint_Reset=TRUE THEN
+	opc.popa_0081_u_3112_runtime_maint_reset:=FALSE;
+	END_IF
+	]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

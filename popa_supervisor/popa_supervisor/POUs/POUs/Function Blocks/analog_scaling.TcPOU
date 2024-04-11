@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="analog_scaling" Id="{6e091dc3-dcd3-4ed3-97fe-a4b8777a6a5d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK analog_scaling
+VAR_INPUT
+	//Raw Input value
+	raw_input : REAL;
+	//Raw Input Minimum Scaling Value
+	raw_min : REAL :=0;
+	//Raw Input Maximum Scaling Value
+	raw_max : REAL :=32767;
+	//Engineering Units Minimum Scaling Value
+	eu_min : REAL;
+	//Engineering Units Maximum Scaling Value
+	eu_max : REAL;
+	//Averaging Filter Time Setpoint
+	filter_factor : REAL;
+	//Zero percent value.  If value is below X% of full range, value will read zero.  This is to reduce noise.  Recommended 1%
+	zero_percent_sp : REAL;
+END_VAR
+VAR_OUTPUT
+	//Scaled Value for Output
+	scaled_value : REAL;
+END_VAR
+VAR
+	//Scratchpad Value
+	normalized_value : REAL;
+	//unfiltered Scaled Value
+	unfiltered_value : REAL;
+	//Filtered Scaled Value
+	filtered_value : REAL;
+	//Zero % calculated value.  Based on full range and zero_percent_sp
+	zero_calculated : REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Initialize Raw_Max and EU_Max to avoid Scaled_Value=Not a number
+IF raw_max = 0 AND raw_min = 0 THEN
+	raw_max:=1;
+END_IF
+IF eu_max = 0 AND eu_min = 0 THEN
+	eu_max:=1;
+END_IF
+
+//Normalize the Analog Input
+IF raw_input < raw_min THEN
+		normalized_value := raw_min;
+	ELSIF raw_input > raw_max THEN
+		normalized_value := raw_max;
+	ELSE
+		normalized_value := (raw_input - raw_min) / (raw_max - raw_min);
+	END_IF
+	
+//Scale the Output
+unfiltered_value := normalized_value * (eu_max-eu_min)+eu_min;
+
+//Low Pass Filter for the output.  Increase Filter to dampen reading
+filtered_value := ((scaled_value * filter_factor) + unfiltered_value) / (filter_factor +1);
+
+//Calculate value below which filtered_value is forced to zero
+zero_calculated := eu_max * (zero_percent_sp / 100);
+
+//If filtered value is below zero_calculated value, force scaled value to eu_min, this is to prevent noise
+IF filtered_value < zero_calculated THEN
+	scaled_value := eu_min;
+ELSE
+	scaled_value := filtered_value;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

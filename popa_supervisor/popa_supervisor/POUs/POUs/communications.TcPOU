@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="Communications" Id="{7df06c8f-9929-4624-86ed-db6de593a22b}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Communications
-VAR
+  <POU Name="communications" Id="{7df06c8f-9929-4624-86ed-db6de593a22b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM communications
+VAR PERSISTENT
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -13,7 +13,7 @@ END_VAR
               <v n="NetworkListComment">""</v>
               <v n="DefaultViewMode">"Ld"</v>
               <l2 n="NetworkList" />
-              <v n="BranchCounter">0</v>
+              <v n="BranchCounter">1</v>
               <v n="ValidIds">true</v>
             </o>
           </Data>

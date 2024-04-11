@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="io_mapping" Id="{87c33c1f-405d-4536-940a-0d0026912d98}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM io_mapping
+VAR PERSISTENT
+    //Example analog input function block
+    cpt_3144 : analog_scaling;
+    //Example Analog input raw input, mapped to a physical input
+    cpt_3144_raw_input AT %I* : INT;
+	
+	//Example motor vfd run feedback, mapped to a physical input
+	u_3112_run_feedback AT %I* : BOOL;
+	
+	//Example motor vfd speed command function block
+	u_3112_speed_command : analog_scaling;
+	//Example motor vfd speed command scaled output, mappped to a physical output
+	u_3112_speed_command_io AT %Q* : INT;
+	
+	//Example motor vfd run feedback, mapped to a physical output
+	u_3112_run_command_io AT %Q* : BOOL;
+	
+	//Example motor vfd speed feedback
+	u_3112_speed_feedback : analog_scaling;
+	
+	//Example motor vfd speed feedback raw input
+	u_3112_speed_feedback_raw_input : INT;
+	
+	//Example motor starter run feedback, mapped to a physical input
+	u_3160_run_feedback AT %I* : BOOL;
+	
+	//Example motor starter run command, mapped to a physical output
+	u_3160_run_command_io : BOOL;
+	
+	//Example analog valve position feedback
+	av_3148_position_feedback : analog_scaling;
+	//Example analog valve position feedback raw input
+	av_3148_position_feedback_raw_input AT %I* : INT;
+	
+	//Example analog valve position command
+	av_3148_position_command : analog_scaling;
+	//Example analog valve position command output valve
+	av_3148_position_command_io AT %Q* : INT;
+	
+	//Example digital valve open feedback
+	nv_3372_open_feedback AT %I* : BOOL;
+	
+	//Example digital valve closed feedback
+	nv_3372_closed_feedback AT %I* : BOOL;
+	
+	//Example digital valve open command
+	nv_3372_open_command_io AT %Q* : BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Instantiate Example analog input function block
+cpt_3144();
+//Map values from the OPC GVL so that they can be written to from outside POU(IE from HMI)
+cpt_3144.eu_max:=opc.popa_0081_cpt_3144_eu_max;
+cpt_3144.eu_min:=opc.popa_0081_cpt_3144_eu_min;
+cpt_3144.filter_factor:=opc.popa_0081_cpt_3144_filter_factor;
+cpt_3144.raw_max:=opc.popa_0081_cpt_3144_raw_max;
+cpt_3144.raw_min:=opc.popa_0081_cpt_3144_raw_min;
+//Map the analog scaling function block raw input to the physical raw input variable
+cpt_3144.raw_input := cpt_3144_raw_input;
+
+//Instantiate Example analog output function block
+u_3112_speed_command();
+//Map values from the OPC GVL so that they can be written to from outside POU(IE from HMI)
+u_3112_speed_command.eu_max:=opc.popa_0081_u_3112_speed_command_eu_max;
+u_3112_speed_command.eu_min:=opc.popa_0081_u_3112_speed_command_eu_min;
+u_3112_speed_command.filter_factor:=opc.popa_0081_u_3112_speed_command_filter_factor;
+u_3112_speed_command.raw_max:=opc.popa_0081_u_3112_speed_command_raw_max;
+u_3112_speed_command.raw_min:=opc.popa_0081_u_3112_speed_command_raw_min;
+//Map output from motor control pou to scaling block
+u_3112_speed_command.raw_input:=motor_vfd_control.u_3112.speed_command;
+//Map the analog scaling function block raw input to the physical raw output variable
+u_3112_speed_command_io := REAL_TO_INT(u_3112_speed_command.scaled_value);
+
+//Instantiate Example analog input function block
+u_3112_speed_feedback();
+//Map values from the OPC GVL so that they can be written to from outside POU(IE from HMI)
+u_3112_speed_feedback.eu_max:=opc.popa_0081_u_3112_speed_feedback_eu_max;
+u_3112_speed_feedback.eu_min:=opc.popa_0081_u_3112_speed_feedback_eu_min;
+u_3112_speed_feedback.filter_factor:=opc.popa_0081_u_3112_speed_feedback_filter_factor;
+u_3112_speed_feedback.raw_max:=opc.popa_0081_u_3112_speed_feedback_raw_max;
+u_3112_speed_feedback.raw_min:=opc.popa_0081_u_3112_speed_feedback_raw_min;
+//Map the analog scaling function block raw input to the physical raw input variable
+u_3112_speed_feedback.raw_input := u_3112_speed_feedback_raw_input;
+
+//Instantiate Example analog input function block
+av_3148_position_feedback();
+//Map values from the OPC GVL so that they can be written to from outside POU(IE from HMI)
+av_3148_position_feedback.eu_max:=opc.popa_0081_av_3148_position_feedback_eu_max;
+av_3148_position_feedback.eu_min:=opc.popa_0081_av_3148_position_feedback_eu_min;
+av_3148_position_feedback.filter_factor:=opc.popa_0081_av_3148_position_feedback_filter_factor;
+av_3148_position_feedback.raw_max:=opc.popa_0081_av_3148_position_feedback_raw_max;
+av_3148_position_feedback.raw_min:=opc.popa_0081_av_3148_position_feedback_raw_min;
+//Map the analog scaling function block raw input to the physical raw input variable
+av_3148_position_feedback.raw_input := av_3148_position_feedback_raw_input;
+
+//Instantiate Example analog output function block
+av_3148_position_command();
+//Map values from the OPC GVL so that they can be written to from outside POU(IE from HMI)
+av_3148_position_command.eu_max:=opc.popa_0081_av_3148_position_command_eu_max;
+av_3148_position_command.eu_min:=opc.popa_0081_av_3148_position_command_eu_min;
+av_3148_position_command.filter_factor:=opc.popa_0081_av_3148_position_command_filter_factor;
+av_3148_position_command.raw_max:=opc.popa_0081_av_3148_position_command_raw_max;
+av_3148_position_command.raw_min:=opc.popa_0081_av_3148_position_command_raw_min;
+//Map output from valve control pou to scaling block
+av_3148_position_command.raw_input:=valve_analog_control.av_3148.Position_Command;
+//Map the analog scaling function block raw input to the physical raw output variable
+av_3148_position_command_io := REAL_TO_INT(av_3148_position_command.scaled_value);
+
+//Map the motor run command to the command output
+u_3112_run_command_io:=motor_vfd_control.u_3112.run_command;
+
+//Map the motor run command to the command output
+u_3160_run_command_io:=motor_starter_control.u_3160.run_command;
+
+//Map the digital valve open command to the command output
+nv_3372_open_command_io:=valve_digital_control.nv_3372.open_command;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

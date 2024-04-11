@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="motor_starter_control_st" Id="{ef6ee357-7fc9-4352-87a7-88c91e076efb}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM motor_starter_control_st
+VAR PERSISTENT
+	//Example motor starter block.  
+	u_3160 : motor_starter;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Instantiate motor starter function block, and map inputs
+u_3160();
+u_3160.run_feedback:=io_mapping.u_3160_run_feedback;
+u_3160.runtime_maint_reset:=opc.popa_0081_u_3160_runtime_maint_reset;
+u_3160.run_request:=example_loop_control.u_3160_run_request;
+u_3160.daily_reset:=general.daily_reset;
+
+//Generic pump fault collector.  If any pump related faults are true, set the function block fault status to true
+IF faults.u_3160_fail_to_start.active=TRUE OR faults.u_3160_fail_to_stop.active=TRUE THEN
+	u_3160.fault:=TRUE;
+	ELSE
+		u_3160.fault:=FALSE;
+	END_IF
+	
+//Reset runtime maint reset after cycle
+IF opc.popa_0081_u_3160_runtime_maint_Reset=TRUE THEN
+	opc.popa_0081_u_3160_runtime_maint_reset:=FALSE;
+	END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

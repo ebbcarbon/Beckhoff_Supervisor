@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="opc_control" Id="{edc08dc8-97c3-47b8-b1df-261bba604ea7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM opc_control
+VAR PERSISTENT
+	//Get Current Task Function, used in first scan bit logic
+	get_current_task_index : GETCURTASKINDEX;
+	//first scan bit, only true for one scan when system is activated/powered up
+	first_scan_bit : BOOL;
+	//OPC UA Server function, used for resetting server on activation
+	opc_ua_server_command : FB_OpcUAServer;
+	//Tells the OPC UA server what we want it to do, in this case restart
+	server_command_option : E_OPCUAServerOption :=eOPCUAServerOption_Restart;
+	//OPC UA Server command timeout
+	timeout_setpoint: TIME :=T#30S;
+	
+	//Finds the AMS Net ID of the OPC UA server, in this case the local PLC
+	get_local_ams_net_id: fb_getlocalamsnetid;
+	//Toggle to request the ams net id
+	amsnetid_request_started: BOOL;
+	//Local AMS Net id of the PLC
+	ams_net_id : T_AmsNetID;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//This logic is only needed for Windows CE based systems, like the CX-9020.  They do not restart the OPC server on activation, which means you need to manually restart the OPC server any time you make OPC changes.
+//This logic automatically restarts the OPC server every time you activate the configuration, so you don't havd to do it manually.
+//This is not required for larger, non-CE based systems like the CX-6030
+
+//Instantiate the GetCurTaskIndex Function block, used in first scan bit
+get_current_task_index();
+//Instantiate the OPCUA Server Function Block
+opc_ua_server_command();
+//Set the OPC UA Server Command
+opc_ua_server_command.eOpcUAServerOption:=server_command_option;
+//Instantiate the Get Local AMS Net ID Function Block
+get_local_ams_net_id();
+
+//Get the local AMS Net ID.  This constantly toggles the request_started bit, to pull the Net ID continuously.
+IF(amsnetid_request_started = FALSE) THEN
+	get_local_ams_net_id(bexecute := TRUE, ttimeout := T#2S);
+	amsnetid_request_started := TRUE;
+ELSE
+	IF(NOT get_local_ams_net_id.bBusy) THEN
+		ams_net_id := get_local_ams_net_id.AddrString;
+		get_local_ams_net_id.bExecute :=FALSE;
+		amsnetid_request_started :=FALSE;
+		END_IF
+END_IF
+
+//This sets the first scan bit true on first scan
+IF _TaskInfo[get_current_task_index.index].FirstCycle THEN
+	first_scan_bit:=TRUE;
+END_IF
+
+//Set the netid, execute, and timeout of the server command to the appropriate points, this is what actually resets the server on first scan
+opc_ua_server_command.sNetId:=ams_net_id;
+opc_ua_server_command.bExecute:=first_scan_bit;
+opc_ua_server_command.tTimeout:=timeout_setpoint;
+
+//Set the first scan bit back to false after the first scan
+first_scan_bit:=FALSE;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

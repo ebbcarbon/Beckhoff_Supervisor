@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="valve_digital_control_st" Id="{8f0a8d66-a59e-41d2-8b25-85917edd7a47}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM valve_digital_control_st
+VAR PERSISTENT
+	// Example digital valve
+	nv_3372: valve_digital;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Instantiate motor vfd function block, and map inputs
+nv_3372();
+nv_3372.open_feedback:=io_mapping.nv_3372_open_feedback;
+nv_3372.closed_feedback:=io_mapping.nv_3372_closed_feedback;
+nv_3372.open_request:=example_loop_control.nv_3372_open_request;
+
+//Generic valve fault collector.  If any pump related faults are true, set the function block fault status to true
+IF faults.nv_3372_fail_to_close.active=TRUE OR faults.nv_3372_fail_to_open.active=TRUE THEN
+	nv_3372.fault:=TRUE;
+	ELSE
+		nv_3372.fault:=FALSE;
+	END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

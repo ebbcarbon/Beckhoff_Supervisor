@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="opc_mapping" Id="{b22e9f76-7f94-4083-919c-cee7ef2d7e82}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM opc_mapping
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//This program maps values from the local variable to the OPC readable tag.
+//Setpoints should NOT be mapped here.  The OPC tag should be used directly where needed
+opc.popa_0081_av_3148_position_fail_active :=faults.av_3148_position_fail.active;
+opc.popa_0081_nv_3372_fail_to_open_active :=faults.nv_3372_fail_to_open.active;
+opc.popa_0081_nv_3372_fail_to_close_active :=faults.nv_3372_fail_to_close.active;
+opc.popa_0081_u_3112_fail_to_start_active:=faults.u_3112_fail_to_start.active;
+opc.popa_0081_u_3112_fail_to_stop_active:=faults.u_3112_fail_to_stop.active;
+opc.popa_0081_u_3160_fail_to_start_active:=faults.u_3160_fail_to_start.active;
+opc.popa_0081_u_3160_fail_to_stop_active:=faults.u_3112_fail_to_stop.active;
+opc.popa_0081_cpt_3144_low_low_active:=faults.cpt_3144_low_low.active;
+opc.popa_0081_cpt_3144_low_active:=faults.cpt_3144_low.active;
+opc.popa_0081_cpt_3144_high_active:=faults.cpt_3144_high.active;
+opc.popa_0081_cpt_3144_high_high_active:=faults.cpt_3144_high_high.active;
+opc.popa_0081_system_date_time_year:=general.system_date_time.year;
+opc.popa_0081_system_date_time_month:=general.system_date_time.month;
+opc.popa_0081_system_date_time_day:=general.system_date_time.day;
+opc.popa_0081_system_date_time_hour:=general.system_date_time.hour;
+opc.popa_0081_system_date_time_minute:=general.system_date_time.minute;
+opc.popa_0081_system_date_time_second:=general.system_date_time.second;
+opc.popa_0081_cpt_3144_scaled_value:=io_mapping.cpt_3144.scaled_value;
+opc.popa_0081_u_3112_speed_command_scaled_value:=io_mapping.u_3112_speed_command.scaled_value;
+opc.popa_0081_u_3112_speed_feedback_scaled_value:=io_mapping.u_3112_speed_feedback.scaled_value;
+opc.popa_0081_av_3148_position_feedback_scaled_value:=io_mapping.av_3148_position_feedback.scaled_value;
+opc.popa_0081_av_3148_position_command_scaled_value:=io_mapping.av_3148_position_command.scaled_value;
+opc.popa_0081_u_3160_run_request:=motor_starter_control.u_3160.run_request;
+opc.popa_0081_u_3160_runtime_today:=motor_starter_control.u_3160.runtime_today;
+opc.popa_0081_u_3160_runtime_total:=motor_starter_control.u_3160.runtime_total;
+opc.popa_0081_u_3160_runtime_maint:=motor_starter_control.u_3160.runtime_maint;
+opc.popa_0081_u_3160_status:=motor_starter_control.u_3160.status;
+opc.popa_0081_u_3112_run_request:=motor_vfd_control.u_3112.run_request;
+opc.popa_0081_u_3112_speed_request:=motor_vfd_control.u_3112.speed_request;
+opc.popa_0081_u_3112_speed_feedback:=motor_vfd_control.u_3112.speed_feedback;
+opc.popa_0081_u_3112_runtime_today:=motor_vfd_control.u_3112.runtime_today;
+opc.popa_0081_u_3112_runtime_total:=motor_vfd_control.u_3112.runtime_total;
+opc.popa_0081_u_3112_runtime_maint:=motor_vfd_control.u_3112.runtime_maint;
+opc.popa_0081_u_3112_status:=motor_vfd_control.u_3112.status;
+opc.popa_0081_av_3148_position_feedback:=valve_analog_control.av_3148.position_feedback;
+opc.popa_0081_av_3148_position_request:=valve_analog_control.av_3148.position_request;
+opc.popa_0081_av_3148_status:=valve_analog_control.av_3148.status;
+opc.popa_0081_nv_3372_open_request:=valve_digital_control.nv_3372.open_request;
+opc.popa_0081_nv_3372_status:=valve_digital_control.nv_3372.status;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="faults" Id="{676b0c44-de53-481b-87a6-7f945cc11bcf}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM faults
+VAR PERSISTENT
+	//Discrete alarm example.  Replace with your own alarms
+	u_3112_fail_to_start : alarm;
+	// Discrete Alarm Example
+	u_3112_fail_to_stop: Alarm;
+	//Discrete alarm example.  Replace with your own alarms
+	u_3160_fail_to_start : alarm;
+	//Discrete alarm example.  Replace with your own alarms
+	u_3160_fail_to_stop : alarm;
+	// Example analog valve position fail alarm
+	av_3148_position_fail: Alarm;
+	// Example digital valve fail to open alarm
+	nv_3372_fail_to_open: Alarm;
+	// Example digital valve fail to close alarm
+	nv_3372_fail_to_close: Alarm;
+	// Example analog alarm low low
+	cpt_3144_low_low: Alarm;
+	// Example analog alarm low
+	cpt_3144_low: Alarm;
+	// Example analog alarm high
+	cpt_3144_high: Alarm;
+	// Example analog alarm high high
+	cpt_3144_high_high: Alarm;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Instantiate the alarm block, and map the inputs from the OPC GVL
+u_3160_fail_to_start();
+u_3160_fail_to_start.alm_ack:=opc.popa_0081_alarm_ack;
+u_3160_fail_to_start.reset:=opc.popa_0081_alarm_reset;
+u_3160_fail_to_start.priority:=opc.popa_0081_u_3160_fail_to_start_priority;
+u_3160_fail_to_start.delay_setpoint:=opc.popa_0081_u_3160_fail_to_start_delay_setpoint;
+u_3160_fail_to_start.enable:=opc.popa_0081_u_3160_fail_to_start_enable;
+
+//Place your alarm trigger logic here.  
+IF motor_starter_control.u_3160.run_command=TRUE AND motor_starter_control.u_3160.run_feedback=FALSE THEN
+	u_3160_fail_to_start.trigger:=TRUE;
+	ELSE
+		u_3160_fail_to_start.trigger:=False;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+u_3160_fail_to_stop();
+u_3160_fail_to_stop.alm_ack:=opc.popa_0081_alarm_ack;
+u_3160_fail_to_stop.reset:=opc.popa_0081_alarm_reset;
+u_3160_fail_to_stop.priority:=opc.popa_0081_u_3160_fail_to_stop_priority;
+u_3160_fail_to_stop.delay_setpoint:=opc.popa_0081_u_3160_fail_to_stop_delay_setpoint;
+u_3160_fail_to_stop.enable:=opc.popa_0081_u_3160_fail_to_stop_enable;
+
+//Place your alarm trigger logic here.  
+IF motor_starter_control.u_3160.run_command=FALSE AND motor_starter_control.u_3160.run_feedback=TRUE THEN
+	u_3160_fail_to_stop.trigger:=TRUE;
+	ELSE
+		u_3160_fail_to_stop.trigger:=FALSE;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+u_3112_fail_to_start();
+u_3112_fail_to_start.alm_ack:=opc.popa_0081_alarm_ack;
+u_3112_fail_to_start.reset:=opc.popa_0081_alarm_reset;
+u_3112_fail_to_start.priority:=opc.popa_0081_u_3112_fail_to_start_priority;
+u_3112_fail_to_start.delay_setpoint:=opc.popa_0081_u_3112_fail_to_start_delay_setpoint;
+u_3112_fail_to_start.enable:=opc.popa_0081_u_3112_fail_to_start_enable;
+
+//Place your alarm trigger logic here.  
+IF motor_vfd_control.u_3112.run_command=TRUE AND motor_vfd_control.u_3112.run_feedback=FALSE THEN
+	u_3112_fail_to_start.trigger:=TRUE;
+	ELSE
+		u_3112_fail_to_start.trigger:=FALSE;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+u_3112_fail_to_stop();
+u_3112_fail_to_stop.alm_ack:=opc.popa_0081_alarm_ack;
+u_3112_fail_to_stop.reset:=opc.popa_0081_alarm_reset;
+u_3112_fail_to_stop.priority:=opc.popa_0081_u_3112_fail_to_stop_priority;
+u_3112_fail_to_stop.delay_setpoint:=opc.popa_0081_u_3112_fail_to_stop_delay_setpoint;
+u_3112_fail_to_stop.enable:=opc.popa_0081_u_3112_fail_to_stop_enable;
+
+//Place your alarm trigger logic here.  
+IF motor_vfd_control.u_3112.run_command=FALSE AND motor_vfd_control.u_3112.run_feedback=TRUE THEN
+	u_3112_fail_to_stop.trigger:=TRUE;
+	ELSE
+		u_3112_fail_to_stop.trigger:=FALSE;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+av_3148_position_fail();
+av_3148_position_fail.alm_ack:=opc.popa_0081_alarm_ack;
+av_3148_position_fail.reset:=opc.popa_0081_alarm_reset;
+av_3148_position_fail.priority:=opc.popa_0081_av_3148_position_fail_priority;
+av_3148_position_fail.delay_setpoint:=opc.popa_0081_av_3148_position_fail_delay_setpoint;
+av_3148_position_fail.enable:=opc.popa_0081_av_3148_position_fail_enable;
+
+//Place your alarm trigger logic here.  
+IF io_mapping.av_3148_position_feedback.scaled_value>valve_analog_control.av_3148.position_deadband_high OR io_mapping.av_3148_position_feedback.scaled_value<valve_analog_control.av_3148.position_deadband_low THEN
+	av_3148_position_fail.trigger:=TRUE;
+	ELSE
+		av_3148_position_fail.trigger:=FALSE;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+nv_3372_fail_to_open();
+nv_3372_fail_to_open.alm_ack:=opc.popa_0081_alarm_ack;
+nv_3372_fail_to_open.reset:=opc.popa_0081_alarm_reset;
+nv_3372_fail_to_open.priority:=opc.popa_0081_nv_3372_fail_to_open_priority;
+nv_3372_fail_to_open.delay_setpoint:=opc.popa_0081_nv_3372_fail_to_open_delay_setpoint;
+nv_3372_fail_to_open.enable:=opc.popa_0081_nv_3372_fail_to_open_enable;
+
+//Place your alarm trigger logic here.  
+IF valve_digital_control.nv_3372.open_command=TRUE AND valve_digital_control.nv_3372.open_feedback=FALSE THEN
+	nv_3372_fail_to_open.trigger:=TRUE;
+	ELSE
+		nv_3372_fail_to_open.trigger:=FALSE;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+nv_3372_fail_to_close();
+nv_3372_fail_to_close.alm_ack:=opc.popa_0081_alarm_ack;
+nv_3372_fail_to_close.reset:=opc.popa_0081_alarm_reset;
+nv_3372_fail_to_close.priority:=opc.popa_0081_nv_3372_fail_to_close_priority;
+nv_3372_fail_to_close.delay_setpoint:=opc.popa_0081_nv_3372_fail_to_close_delay_setpoint;
+nv_3372_fail_to_close.enable:=opc.popa_0081_nv_3372_fail_to_close_enable;
+
+//Place your alarm trigger logic here.  
+IF valve_digital_control.nv_3372.open_command=FALSE AND valve_digital_control.nv_3372.open_feedback=TRUE THEN
+	nv_3372_fail_to_close.trigger:=TRUE;
+	ELSE
+		nv_3372_fail_to_close.trigger:=FALSE;
+	END_IF	
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+cpt_3144_low_low();
+cpt_3144_low_low.alm_ack:=opc.popa_0081_alarm_ack;
+cpt_3144_low_low.reset:=opc.popa_0081_alarm_reset;
+cpt_3144_low_low.priority:=opc.popa_0081_cpt_3144_low_low_priority;
+cpt_3144_low_low.delay_setpoint:=opc.popa_0081_cpt_3144_low_low_delay_setpoint;
+cpt_3144_low_low.enable:=opc.popa_0081_cpt_3144_low_low_enable;
+
+//Place your alarm trigger logic here.  
+IF io_mapping.cpt_3144.scaled_value<opc.popa_0081_cpt_3144_low_low_setpoint THEN
+	cpt_3144_low_low.trigger:=TRUE;
+	ELSE
+		cpt_3144_low_low.trigger:=FALSE;
+	END_IF	
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+cpt_3144_low();
+cpt_3144_low.alm_ack:=opc.popa_0081_alarm_ack;
+cpt_3144_low.reset:=opc.popa_0081_alarm_reset;
+cpt_3144_low.priority:=opc.popa_0081_cpt_3144_low_priority;
+cpt_3144_low.delay_setpoint:=opc.popa_0081_cpt_3144_low_delay_setpoint;
+cpt_3144_low.enable:=opc.popa_0081_cpt_3144_low_enable;
+
+//Place your alarm trigger logic here.  
+IF io_mapping.cpt_3144.scaled_value<opc.popa_0081_cpt_3144_low_setpoint THEN
+	cpt_3144_low.trigger:=TRUE;
+	ELSE
+		cpt_3144_low.trigger:=FALSE;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+cpt_3144_high();
+cpt_3144_high.alm_ack:=opc.popa_0081_alarm_ack;
+cpt_3144_high.reset:=opc.popa_0081_alarm_reset;
+cpt_3144_high.priority:=opc.popa_0081_cpt_3144_high_priority;
+cpt_3144_high.delay_setpoint:=opc.popa_0081_cpt_3144_high_delay_setpoint;
+cpt_3144_high.enable:=opc.popa_0081_cpt_3144_high_enable;
+
+//Place your alarm trigger logic here.  
+IF io_mapping.cpt_3144.scaled_value<opc.popa_0081_cpt_3144_high_setpoint THEN
+	cpt_3144_high.trigger:=TRUE;
+	ELSE
+		cpt_3144_high.trigger:=FALSE;
+	END_IF
+	
+//Instantiate the alarm block, and map the inputs from the OPC GVL
+cpt_3144_high_high();
+cpt_3144_high_high.alm_ack:=opc.popa_0081_alarm_ack;
+cpt_3144_high_high.reset:=opc.popa_0081_alarm_reset;
+cpt_3144_high_high.priority:=opc.popa_0081_cpt_3144_high_high_priority;
+cpt_3144_high_high.delay_setpoint:=opc.popa_0081_cpt_3144_high_high_delay_setpoint;
+cpt_3144_high_high.enable:=opc.popa_0081_cpt_3144_high_high_enable;
+
+//Place your alarm trigger logic here.  
+IF io_mapping.cpt_3144.scaled_value<opc.popa_0081_cpt_3144_high_high_setpoint THEN
+	cpt_3144_high_high.trigger:=TRUE;
+	ELSE
+		cpt_3144_high_high.trigger:=FALSE;
+	END_IF
+	
+	]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
