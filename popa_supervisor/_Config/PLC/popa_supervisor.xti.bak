@@ -1,15 +1,79 @@
 <?xml version="1.0"?>
 <TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.47" ClassName="CNestedPlcProjDef">
 	<Project GUID="{A69D7AB4-53AC-40E7-8E11-A7DF25BBEC0A}" Name="popa_supervisor" PrjFilePath="..\..\popa_supervisor\popa_supervisor.plcproj" TmcFilePath="..\..\popa_supervisor\popa_supervisor.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Template\Template.tmc" TmcHash="{EFDB003D-74D5-EFBC-3D54-0484C72FAFBD}">
 			<Name>popa_supervisor Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<Vars VarGrpType="1">
+				<Name>PlcTask Inputs</Name>
+				<Var>
+					<Name>io_mapping.u_3112_run_feedback</Name>
+					<Comment><![CDATA[Example motor vfd run feedback, mapped to a physical input]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.cpt_3144_raw_input</Name>
+					<Comment><![CDATA[Example Analog input raw input, mapped to a physical input]]></Comment>
+					<Type>INT</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.u_3160_run_feedback</Name>
+					<Comment><![CDATA[Example motor starter run feedback, mapped to a physical input]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.nv_3372_open_feedback</Name>
+					<Comment><![CDATA[Example digital valve open feedback]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.av_3148_position_feedback_raw_input</Name>
+					<Comment><![CDATA[Example analog valve position feedback raw input]]></Comment>
+					<Type>INT</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.nv_3372_closed_feedback</Name>
+					<Comment><![CDATA[Example digital valve closed feedback]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
+			<Vars VarGrpType="2" AreaNo="1">
+				<Name>PlcTask Outputs</Name>
+				<Var>
+					<Name>io_mapping.u_3112_speed_command_io</Name>
+					<Comment><![CDATA[Example motor vfd speed command scaled output, mappped to a physical output]]></Comment>
+					<Type>INT</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.u_3112_run_command_io</Name>
+					<Comment><![CDATA[Example motor vfd run feedback, mapped to a physical output]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.av_3148_position_command_io</Name>
+					<Comment><![CDATA[Example analog valve position command output valve]]></Comment>
+					<Type>INT</Type>
+				</Var>
+				<Var>
+					<Name>io_mapping.nv_3372_open_command_io</Name>
+					<Comment><![CDATA[Example digital valve open command]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
 			<Contexts>
 				<Context>
-					<Id>1</Id>
-					<Name>Default</Name>
+					<Id>0</Id>
+					<Name>PlcTask</Name>
+					<ManualConfig>
+						<OTCID>#x02010030</OTCID>
+					</ManualConfig>
+					<Priority>20</Priority>
+					<CycleTime>10000000</CycleTime>
 				</Context>
 			</Contexts>
+			<TaskPouOids>
+				<TaskPouOid Prio="20" OTCID="#x08502001"/>
+			</TaskPouOids>
 		</Instance>
 	</Project>
 </TcSmItem>

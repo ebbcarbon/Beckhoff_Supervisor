@@ -5,19 +5,43 @@
     <CycleTime>10000</CycleTime>
     <Priority>20</Priority>
     <PouCall>
-      <Name>Analog_IO_Mapping</Name>
+      <Name>communications</Name>
     </PouCall>
     <PouCall>
-      <Name>General</Name>
+      <Name>example_loop_control</Name>
     </PouCall>
     <PouCall>
-      <Name>Faults</Name>
+      <Name>faults</Name>
     </PouCall>
     <PouCall>
-      <Name>Communications</Name>
+      <Name>general</Name>
     </PouCall>
     <PouCall>
-      <Name>Motor_Example</Name>
+      <Name>interlocks</Name>
+    </PouCall>
+    <PouCall>
+      <Name>io_mapping</Name>
+    </PouCall>
+    <PouCall>
+      <Name>motor_starter_control</Name>
+    </PouCall>
+    <PouCall>
+      <Name>motor_vfd_control</Name>
+    </PouCall>
+    <PouCall>
+      <Name>opc_control</Name>
+    </PouCall>
+    <PouCall>
+      <Name>opc_mapping</Name>
+    </PouCall>
+    <PouCall>
+      <Name>state_transition</Name>
+    </PouCall>
+    <PouCall>
+      <Name>valve_analog_control</Name>
+    </PouCall>
+    <PouCall>
+      <Name>valve_digital_control</Name>
     </PouCall>
     <TaskFBGuid>{b444c442-1e08-4dc9-9582-92f769dd2481}</TaskFBGuid>
     <Fb_init>{577a81fe-f5e0-461c-b354-40a78c1bce7d}</Fb_init>

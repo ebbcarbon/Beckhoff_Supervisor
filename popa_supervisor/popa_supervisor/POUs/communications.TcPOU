@@ -13,7 +13,7 @@ END_VAR
               <v n="NetworkListComment">""</v>
               <v n="DefaultViewMode">"Ld"</v>
               <l2 n="NetworkList" />
-              <v n="BranchCounter">1</v>
+              <v n="BranchCounter">0</v>
               <v n="ValidIds">true</v>
             </o>
           </Data>

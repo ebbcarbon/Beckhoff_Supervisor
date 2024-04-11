@@ -1,21 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="example_loop_control" Id="{f4111f27-f002-47e1-985a-deb6fca944d4}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM example_loop_control
-VAR
-	//Example run request for a starter motor.  This would be triggered by control loop logic
-	u_3160_run_request : BOOL;
-	
-	//Example run request for a vfd motor.  This would be triggered by control loop logic
-	u_3112_run_request : BOOL;
-	//Example Speed Request for a vfd motor.  This would be set by control loop logic, normally a PID
-	u_3112_speed_request : REAL;
-	
-	//Example position request for an analog valve.  This would be set by control loop logic, normally a PID
-	av_3148_position_request : REAL;
-	
-	//Example open request for a digital valve.  This would be triggered by control loop logic
-	nv_3372_open_request : BOOL;
+  <POU Name="interlocks" Id="{5e6ac187-5fbb-479f-b495-0ce9f8a80e37}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM interlocks
+VAR PERSISTENT
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -37,7 +24,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems" />
                   <l2 n="Connectors" />
-                  <v n="Id">2L</v>
+                  <v n="Id">5L</v>
                 </o>
               </l2>
               <v n="BranchCounter">1</v>

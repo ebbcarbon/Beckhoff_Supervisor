@@ -19,86 +19,90 @@
     <Released>false</Released>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GVLs\GVLs\opc.TcGVL">
+    <Compile Include="GVLs\opc.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\communications.TcPOU">
+    <Compile Include="POUs\example_loop_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\example_loop_control.TcPOU">
+    <Compile Include="POUs\faults.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\faults.TcPOU">
+    <Compile Include="POUs\interlocks.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\Function Blocks\alarm.TcPOU">
+    <Compile Include="POUs\io_mapping.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\Function Blocks\analog_scaling.TcPOU">
+    <Compile Include="POUs\communications.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\Function Blocks\date_time.TcPOU">
+    <Compile Include="POUs\Function Blocks\alarm.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\Function Blocks\motor_starter.TcPOU">
+    <Compile Include="POUs\Function Blocks\analog_scaling.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\Function Blocks\motor_vfd.TcPOU">
+    <Compile Include="POUs\Function Blocks\date_time.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\general.TcPOU">
+    <Compile Include="POUs\Function Blocks\motor_starter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\interlocks.TcPOU">
+    <Compile Include="POUs\Function Blocks\motor_vfd.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\io_mapping.TcPOU">
+    <Compile Include="POUs\Function Blocks\valve_analog.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\motor_starter_control.TcPOU">
+    <Compile Include="POUs\Function Blocks\valve_digital.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\motor_starter_control_st.TcPOU">
+    <Compile Include="POUs\general.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\motor_vfd_control.TcPOU">
+    <Compile Include="POUs\motor_starter_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\motor_vfd_control_st.TcPOU">
+    <Compile Include="POUs\motor_starter_control_st.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\opc_control.TcPOU">
+    <Compile Include="POUs\motor_vfd_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\opc_mapping.TcPOU">
+    <Compile Include="POUs\motor_vfd_control_st.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\state_transition.TcPOU">
+    <Compile Include="POUs\opc_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\valve_analog_control.TcPOU">
+    <Compile Include="POUs\opc_mapping.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\valve_analog_control_st.TcPOU">
+    <Compile Include="POUs\state_transition.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\valve_digital_control.TcPOU">
+    <Compile Include="POUs\valve_analog_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\POUs\valve_digital_control_st.TcPOU">
+    <Compile Include="POUs\valve_analog_control_st.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\valve_digital_control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\valve_digital_control_st.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="GVLs\GVLs" />
-    <Folder Include="POUs\POUs" />
-    <Folder Include="POUs\POUs\Function Blocks" />
+    <Folder Include="POUs\Function Blocks" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
