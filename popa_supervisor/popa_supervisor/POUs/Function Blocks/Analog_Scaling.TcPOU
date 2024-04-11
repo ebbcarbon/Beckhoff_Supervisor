@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Analog_Scaling" Id="{6e091dc3-dcd3-4ed3-97fe-a4b8777a6a5d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Analog_Scaling
+VAR_INPUT
+	//Raw Input value
+	Raw_Input : REAL;
+	//Raw Input Minimum Scaling Value
+	Raw_Min : REAL;
+	//Raw Input Maximum Scaling Value
+	Raw_Max : REAL;
+	//Engineering Units Minimum Scaling Value
+	EU_Min : REAL;
+	//Engineering Units Maximum Scaling Value
+	EU_Max : REAL;
+	//Averaging Filter Time Setpoint
+	Filter_Factor : REAL;
+END_VAR
+VAR_OUTPUT
+	//Scaled Value for Output
+	Scaled_Value : REAL;
+END_VAR
+VAR
+	//Scratchpad Value
+	Normalized_Value : REAL;
+	//Normalized/Scaled Value
+	Scaled : REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Initialize Raw_Max and EU_Max to avoid Scaled_Value=Not a number
+IF Raw_Max = 0 AND Raw_Min = 0 THEN
+	Raw_Max:=1;
+END_IF
+IF EU_Max = 0 AND Raw_Min = 0 THEN
+	EU_Max:=1;
+END_IF
+
+//Normalize the Analog Input
+IF Raw_Input < Raw_Min THEN
+		Normalized_Value := Raw_Min;
+	ELSIF Raw_Input > Raw_Max THEN
+		Normalized_Value := Raw_Max;
+	ELSE
+		Normalized_Value := (Raw_Input - Raw_Min) / (Raw_Max - Raw_Min);
+	END_IF
+	
+//Scale the Output
+Scaled := Normalized_Value * (EU_Max-EU_Min)+EU_Min;
+
+//Low Pass Filter for the output.  Increase Filter to dampen reading
+Scaled_Value := ((Scaled_Value * Filter_Factor) + Scaled) / (Filter_Factor +1);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

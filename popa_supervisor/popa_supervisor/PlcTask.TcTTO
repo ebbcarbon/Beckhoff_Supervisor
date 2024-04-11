@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Task Name="PlcTask" Id="{e6e607d9-1828-4338-b586-8afa6a35c7a4}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>10000</CycleTime>
+    <Priority>20</Priority>
+    <PouCall>
+      <Name>Analog_IO_Mapping</Name>
+    </PouCall>
+    <PouCall>
+      <Name>General</Name>
+    </PouCall>
+    <PouCall>
+      <Name>Faults</Name>
+    </PouCall>
+    <PouCall>
+      <Name>Communications</Name>
+    </PouCall>
+    <PouCall>
+      <Name>Motor_Example</Name>
+    </PouCall>
+    <TaskFBGuid>{b444c442-1e08-4dc9-9582-92f769dd2481}</TaskFBGuid>
+    <Fb_init>{577a81fe-f5e0-461c-b354-40a78c1bce7d}</Fb_init>
+    <Fb_exit>{7b6bfdd9-ca55-4690-a605-db211c8d1914}</Fb_exit>
+    <CycleUpdate>{eda08b31-5868-42e6-90da-5246aa4c1886}</CycleUpdate>
+    <PostCycleUpdate>{a7c0d38f-3547-4be0-8c0b-3da39a7f5e86}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>
