@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.47" ClassName="CNvPubSubDef" SubType="9052">
+	<Box Id="2" BoxType="9052">
+		<Name>__FILENAME__</Name>
+		<ImageId>100</ImageId>
+		<Vars VarGrpType="1">
+			<Name>Inputs</Name>
+			<Var BoxStateVariable="true">
+				<Name>FrameState</Name>
+				<Type>UINT</Type>
+				<BitOffs>32</BitOffs>
+			</Var>
+		</Vars>
+		<Vars VarGrpType="2">
+			<Name>Outputs</Name>
+			<Var BoxStateVariable="true">
+				<Name>FrameCtrl</Name>
+				<Type>UINT</Type>
+				<BitOffs>64</BitOffs>
+			</Var>
+		</Vars>
+		<Eap Mac="010105040000">
+			<EapVar Id="1" NvId="1" NvLength="4">
+				<Name>Pub-Var 1</Name>
+				<ImageId>98</ImageId>
+				<Vars VarGrpType="1">
+					<Name>Inputs</Name>
+					<Var BoxStateVariable="true">
+						<Name>VarState</Name>
+						<Comment><![CDATA[0x0001 = Invalid hash value received
+0x0002 = Invalid variable length received
+]]></Comment>
+						<Type>UINT</Type>
+						<BitOffs>48</BitOffs>
+					</Var>
+					<Var>
+						<Name>Quality</Name>
+						<Comment><![CDATA[Duration the variable is not refreshed (in 100µs)]]></Comment>
+						<Type>UINT</Type>
+						<BitOffs>64</BitOffs>
+					</Var>
+					<Var>
+						<Name>CycleIndex</Name>
+						<Comment><![CDATA[Incremented each publisher cycle]]></Comment>
+						<Type>UINT</Type>
+						<BitOffs>80</BitOffs>
+					</Var>
+					<Var>
+						<Name>VarData</Name>
+						<Type>REAL</Type>
+						<BitOffs>96</BitOffs>
+					</Var>
+				</Vars>
+				<Vars VarGrpType="2">
+					<Name>Outputs</Name>
+					<Var BoxStateVariable="true">
+						<Name>VarCtrl</Name>
+						<Comment><![CDATA[0x0001 = Ignore hash value
+]]></Comment>
+						<Type>UINT</Type>
+						<BitOffs>80</BitOffs>
+					</Var>
+				</Vars>
+			</EapVar>
+		</Eap>
+	</Box>
+</TcSmItem>

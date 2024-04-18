@@ -3,19 +3,7 @@
   <POU Name="example_loop_control" Id="{f4111f27-f002-47e1-985a-deb6fca944d4}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM example_loop_control
 VAR
-	//Example run request for a starter motor.  This would be triggered by control loop logic
-	u_3160_run_request : BOOL;
-	
-	//Example run request for a vfd motor.  This would be triggered by control loop logic
-	u_3112_run_request : BOOL;
-	//Example Speed Request for a vfd motor.  This would be set by control loop logic, normally a PID
-	u_3112_speed_request : REAL;
-	
-	//Example position request for an analog valve.  This would be set by control loop logic, normally a PID
-	av_3148_position_request : REAL;
-	
-	//Example open request for a digital valve.  This would be triggered by control loop logic
-	nv_3372_open_request : BOOL;
+
 END_VAR
 ]]></Declaration>
     <Implementation>

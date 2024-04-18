@@ -65,13 +65,7 @@
     <Compile Include="POUs\general.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\motor_starter_control.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\motor_starter_control_st.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\motor_vfd_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\motor_vfd_control_st.TcPOU">
@@ -86,13 +80,7 @@
     <Compile Include="POUs\state_transition.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\valve_analog_control.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\valve_analog_control_st.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\valve_digital_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\valve_digital_control_st.TcPOU">
@@ -128,6 +116,11 @@
     <LibraryReference Include="Tc2_OpcUa,3.3.2.0,Beckhoff Automation GmbH">
       <Namespace>Tc2_OpcUa</Namespace>
     </LibraryReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="popa_supervisor.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
