@@ -9,6 +9,54 @@ VAR_GLOBAL PERSISTENT
 	//All tags in this GVL MUST have the {attribute 'OPC.UA.DA' :='1'} string above them in order to be exposed to OPC
 	//Tags that are ONLY being read from the HMI have their values set in the opc_mapping program
 		
+	//State request INT from the HMI
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0200_hmi_state_request : INT;
+	
+	//Current Supervisor State
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0200_state : INT;
+	
+	//Current ED1 State
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_ed_state : INT;
+	
+	//ED1 Ok to transition from stop to idle
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_idle_transition_ok : BOOL;
+	
+	//ED1 Ok to transition from stop to CIP
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_cip_transition_ok : BOOL;
+	
+	//ED1 Ok to transition from stop to Manual
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_manual_transition_ok : BOOL;
+	
+	//ED1 Ok to transition from stop to Maintenance
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_maint_transition_ok : BOOL;
+	
+	//ED1 Ok to transition from idle to auto-input based
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_auto1_transition_ok : BOOL;
+	
+	//ED1 Ok to transition from idle to auto-concentration
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_auto2_transition_ok : BOOL;
+	
+	//ED1 Ok to transition from idle to auto-optimization
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0081_auto3_transition_ok : BOOL;
+	
+	//Pretreat Transfer State
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0070_state : INT;
+	
+	//Product Transfer State
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_0120_state : INT;
+	
 	//Alarm Priority setpoint
 	{attribute 'OPC.UA.DA' :='1'}
 	popa_0081_cpt_3144_low_low_priority : INT;

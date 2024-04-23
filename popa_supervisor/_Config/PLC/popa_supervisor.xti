@@ -1,40 +1,60 @@
 <?xml version="1.0"?>
 <TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.47" ClassName="CNestedPlcProjDef">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{457315DB-58E9-47DF-F116-A4C15068A1F9}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..99] OF BOOL</Name>
+			<BitSize>800</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>100</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{EA796A14-A7FE-997C-2C8A-674096A0D9B0}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..99] OF REAL</Name>
+			<BitSize>3200</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000D}">REAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>100</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{3806C648-6F16-AA9C-F5FC-87183BFE5765}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..9] OF REAL</Name>
+			<BitSize>320</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000D}">REAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>10</Elements>
+			</ArrayInfo>
+		</DataType>
+	</DataTypes>
 	<Project GUID="{A69D7AB4-53AC-40E7-8E11-A7DF25BBEC0A}" Name="popa_supervisor" PrjFilePath="..\..\popa_supervisor\popa_supervisor.plcproj" TmcFilePath="..\..\popa_supervisor\popa_supervisor.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" CopyTpyToTarget="false" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="popa_supervisor\popa_supervisor.tmc" TmcHash="{741D1246-08BA-F934-CC3E-9B5B389CE2C7}">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="popa_supervisor\popa_supervisor.tmc" TmcHash="{30F30E88-9523-D4DE-4796-84D87CE4DC41}">
 			<Name>popa_supervisor Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Vars VarGrpType="1">
 				<Name>PlcTask Inputs</Name>
-				<Var>
-					<Name>io_mapping.u_3112_run_feedback</Name>
-					<Comment><![CDATA[Example motor vfd run feedback, mapped to a physical input]]></Comment>
-					<Type>BOOL</Type>
-				</Var>
 				<Var>
 					<Name>io_mapping.cpt_3144_raw_input</Name>
 					<Comment><![CDATA[Example Analog input raw input, mapped to a physical input]]></Comment>
 					<Type>INT</Type>
 				</Var>
 				<Var>
-					<Name>io_mapping.u_3160_run_feedback</Name>
-					<Comment><![CDATA[Example motor starter run feedback, mapped to a physical input]]></Comment>
-					<Type>BOOL</Type>
+					<Name>plccomms.popa_0070_subscribe_bool</Name>
+					<Type GUID="{457315DB-58E9-47DF-F116-A4C15068A1F9}">ARRAY [0..99] OF BOOL</Type>
 				</Var>
 				<Var>
-					<Name>io_mapping.nv_3372_open_feedback</Name>
-					<Comment><![CDATA[Example digital valve open feedback]]></Comment>
-					<Type>BOOL</Type>
+					<Name>plccomms.popa_0081_subscribe_bool</Name>
+					<Type GUID="{457315DB-58E9-47DF-F116-A4C15068A1F9}">ARRAY [0..99] OF BOOL</Type>
 				</Var>
 				<Var>
-					<Name>io_mapping.av_3148_position_feedback_raw_input</Name>
-					<Comment><![CDATA[Example analog valve position feedback raw input]]></Comment>
-					<Type>INT</Type>
+					<Name>plccomms.popa_0070_subscribe_real</Name>
+					<Type GUID="{EA796A14-A7FE-997C-2C8A-674096A0D9B0}">ARRAY [0..99] OF REAL</Type>
 				</Var>
 				<Var>
-					<Name>io_mapping.nv_3372_closed_feedback</Name>
-					<Comment><![CDATA[Example digital valve closed feedback]]></Comment>
-					<Type>BOOL</Type>
+					<Name>plccomms.popa_0081_subscribe_real</Name>
+					<Type GUID="{EA796A14-A7FE-997C-2C8A-674096A0D9B0}">ARRAY [0..99] OF REAL</Type>
 				</Var>
 			</Vars>
 			<Vars VarGrpType="2" AreaNo="1">
@@ -44,30 +64,22 @@
 					<Type>REAL</Type>
 				</Var>
 				<Var>
-					<Name>io_mapping.u_3112_speed_command_io</Name>
-					<Comment><![CDATA[Example motor vfd speed command scaled output, mappped to a physical output]]></Comment>
-					<Type>INT</Type>
+					<Name>plccomms.popa_supervisor_publish_bool</Name>
+					<Type GUID="{457315DB-58E9-47DF-F116-A4C15068A1F9}">ARRAY [0..99] OF BOOL</Type>
 				</Var>
 				<Var>
-					<Name>io_mapping.u_3112_run_command_io</Name>
-					<Comment><![CDATA[Example motor vfd run feedback, mapped to a physical output]]></Comment>
-					<Type>BOOL</Type>
+					<Name>plccomms.popa_supervisor_publish_real</Name>
+					<Type GUID="{EA796A14-A7FE-997C-2C8A-674096A0D9B0}">ARRAY [0..99] OF REAL</Type>
 				</Var>
 				<Var>
-					<Name>io_mapping.av_3148_position_command_io</Name>
-					<Comment><![CDATA[Example analog valve position command output valve]]></Comment>
-					<Type>INT</Type>
-				</Var>
-				<Var>
-					<Name>io_mapping.nv_3372_open_command_io</Name>
-					<Comment><![CDATA[Example digital valve open command]]></Comment>
-					<Type>BOOL</Type>
+					<Name>io_mapping.publisharray</Name>
+					<Type GUID="{3806C648-6F16-AA9C-F5FC-87183BFE5765}">ARRAY [0..9] OF REAL</Type>
 				</Var>
 			</Vars>
 			<UnrestoredVarLinks ImportTime="2024-04-16T16:04:00">
 				<OwnerA Name="OutputSrc" Prefix="TIPC^popa_supervisor^popa_supervisor Instance" Type="2">
 					<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Publisher (Publisher)">
-						<Link VarA="io_mapping.test_real" TypeA="INT" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Pub-Var 1^Outputs^VarData" Size="16" RestoreInfo="TypeMismatch" OldTypeA="INT" OldGuidA="{18071995-0000-0000-0000-000000000006}" NewTypeA="REAL" NewGuidA="{18071995-0000-0000-0000-00000000000D}"/>
+						<Link VarA="io_mapping.test_real" TypeA="INT" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Pub-Var 1^Outputs^VarData" Size="16" RestoreInfo="BNotFound" OldTypeA="INT" OldGuidA="{18071995-0000-0000-0000-000000000006}" NewTypeA="REAL" NewGuidA="{18071995-0000-0000-0000-00000000000D}"/>
 					</OwnerB>
 				</OwnerA>
 			</UnrestoredVarLinks>
@@ -87,11 +99,4 @@
 			</TaskPouOids>
 		</Instance>
 	</Project>
-	<Mappings>
-		<OwnerA Name="popa_supervisor Instance">
-			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Publisher (Publisher)">
-				<Link VarA="PlcTask Outputs^io_mapping.test_real" VarB="Pub-Var 1^Outputs^VarData"/>
-			</OwnerB>
-		</OwnerA>
-	</Mappings>
 </TcSmItem>

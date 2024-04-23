@@ -8,6 +8,10 @@ VAR PERSISTENT
 	
 	test_real AT %Q* : REAL;
 	
+	publisharray AT %Q* : ARRAY[0..9] OF REAL;
+	
+	sine_wave : REAL;
+	
     //Example Analog input raw input, mapped to a physical input
     cpt_3144_raw_input AT %I* : INT;
 
@@ -25,6 +29,14 @@ cpt_3144.raw_min:=opc.popa_0081_cpt_3144_raw_min;
 //Map the analog scaling function block raw input to the physical raw input variable
 cpt_3144.raw_input := cpt_3144_raw_input;
 
+sine_wave:=sine_wave+0.001;
+IF (sine_wave>(2*pi)) THEN
+	sine_wave:=0;
+END_IF
+
+publisharray[0]:=sine_wave;
+publisharray[1]:=sine_wave/2;
+publisharray[2]:=sine_wave*2;
 ]]></ST>
     </Implementation>
   </POU>
