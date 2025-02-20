@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <GVL Name="opc" Id="{674fd3be-a48d-4a85-a2e2-bd0824412020}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'global_init_slot' := '50500'}
@@ -151,7 +151,7 @@ VAR_GLOBAL PERSISTENT
 	//Alarm reset, clears higher priority alarms
 	{attribute 'OPC.UA.DA' :='1'}
 	popa_0081_alarm_reset : BOOL;
-	
+
 	//Raw Min value for analog input
 	{attribute 'OPC.UA.DA' :='1'}
 	popa_0081_cpt_3144_raw_min : REAL :=0;
@@ -168,8 +168,8 @@ VAR_GLOBAL PERSISTENT
 	{attribute 'OPC.UA.DA' :='1'}
 	popa_0081_cpt_3144_filter_factor : REAL;
 	//Scaled value for analog input
-	{attribute 'OPC.UA.DA' :='1'}
-	popa_0081_cpt_3144_scaled_value : REAL;
+//	{attribute 'OPC.UA.DA' :='1'}
+//	popa_0081_cpt_3144_scaled_value : REAL;
 
 
 END_VAR]]></Declaration>
