@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.47" ClassName="CNestedPlcProjDef">
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.65" ClassName="CNestedPlcProjDef">
 	<DataTypes>
 		<DataType>
 			<Name GUID="{3806C648-6F16-AA9C-F5FC-87183BFE5765}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..9] OF REAL</Name>
@@ -12,7 +12,7 @@
 		</DataType>
 	</DataTypes>
 	<Project GUID="{A69D7AB4-53AC-40E7-8E11-A7DF25BBEC0A}" Name="popa_supervisor" PrjFilePath="..\..\popa_supervisor\popa_supervisor.plcproj" TmcFilePath="..\..\popa_supervisor\popa_supervisor.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" CopyTpyToTarget="false" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="popa_supervisor\popa_supervisor.tmc" TmcHash="{3543B0A3-8240-E5E4-BD3A-A38A43731279}">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="popa_supervisor\popa_supervisor.tmc" TmcHash="{95277469-EA86-A8E3-0765-308987F1A216}">
 			<Name>popa_supervisor Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Vars VarGrpType="1">
@@ -21,6 +21,68 @@
 					<Name>io_mapping.cpt_3144_raw_input</Name>
 					<Comment><![CDATA[Example Analog input raw input, mapped to a physical input]]></Comment>
 					<Type>INT</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.barge_warning_alarm</Name>
+					<Comment><![CDATA[--- EAP Mapping should be done at the device level - mapping should not need to change after creation -----------
+--- Inputs --------------------------------------------------------------------------------------------------	]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.barge_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.barge_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.prodxfer_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.prodxfer_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.prodxfer_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.acid_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.acid_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.acid_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.ed_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.ed_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.ed_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.prexfer_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.prexfer_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.prexfer_critical_alarm</Name>
+					<Type>BOOL</Type>
 				</Var>
 			</Vars>
 			<Vars VarGrpType="2" AreaNo="1">
@@ -33,11 +95,72 @@
 					<Name>io_mapping.publisharray</Name>
 					<Type GUID="{3806C648-6F16-AA9C-F5FC-87183BFE5765}">ARRAY [0..9] OF REAL</Type>
 				</Var>
+				<Var>
+					<Name>eap_mapping.sup_barge_warning_alarm</Name>
+					<Comment><![CDATA[--- Outputs -------------------------------------------------------------------------------------------------]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_barge_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_barge_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_prodxfer_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_prodxfer_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_prodxfer_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_acid_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_acid_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_acid_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_ed_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_ed_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_ed_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_prexfer_warning_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_prexfer_error_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>eap_mapping.sup_prexfer_critical_alarm</Name>
+					<Type>BOOL</Type>
+				</Var>
 			</Vars>
 			<UnrestoredVarLinks ImportTime="2024-04-16T16:04:00">
 				<OwnerA Name="OutputSrc" Prefix="TIPC^popa_supervisor^popa_supervisor Instance" Type="2">
 					<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Publisher (Publisher)">
-						<Link VarA="io_mapping.test_real" TypeA="INT" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Pub-Var 1^Outputs^VarData" Size="16" RestoreInfo="TypeMismatch" OldTypeA="INT" OldGuidA="{18071995-0000-0000-0000-000000000006}" NewTypeA="REAL" NewGuidA="{18071995-0000-0000-0000-00000000000D}"/>
+						<Link VarA="io_mapping.test_real" TypeA="INT" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Pub-Var 1^Outputs^VarData" Size="16" RestoreInfo="BNotFound" OldTypeA="INT" OldGuidA="{18071995-0000-0000-0000-000000000006}" NewTypeA="REAL" NewGuidA="{18071995-0000-0000-0000-00000000000D}"/>
 					</OwnerB>
 				</OwnerA>
 			</UnrestoredVarLinks>
@@ -57,4 +180,58 @@
 			</TaskPouOids>
 		</Instance>
 	</Project>
+	<Mappings>
+		<OwnerA Name="popa_supervisor Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Acid_Sup (Subscriber)">
+				<Link VarA="PlcTask Inputs^eap_mapping.acid_critical_alarm" VarB="acid_critical_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.acid_error_alarm" VarB="acid_error_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.acid_warning_alarm" VarB="acid_warning_alarm^Inputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Barge_Sup (Subscriber)">
+				<Link VarA="PlcTask Inputs^eap_mapping.barge_critical_alarm" VarB="barge_critical_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.barge_error_alarm" VarB="barge_error_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.barge_warning_alarm" VarB="barge_warning_alarm^Inputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^ED_Sup (Subscriber)">
+				<Link VarA="PlcTask Inputs^eap_mapping.ed_critical_alarm" VarB="ed_critical_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.ed_error_alarm" VarB="ed_error_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.ed_warning_alarm" VarB="ed_warning_alarm^Inputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Prexfer_Sup (Subscriber)">
+				<Link VarA="PlcTask Inputs^eap_mapping.prexfer_critical_alarm" VarB="prexfer_critical_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.prexfer_error_alarm" VarB="prexfer_error_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.prexfer_warning_alarm" VarB="prexfer_warning_alarm^Inputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^ProdXfer_Sup (Subscriber)">
+				<Link VarA="PlcTask Inputs^eap_mapping.prodxfer_critical_alarm" VarB="prodxfer_critical_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.prodxfer_error_alarm" VarB="prodxfer_error_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.prodxfer_warning_alarm" VarB="prodxfer_warning_alarm^Inputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Sup_Acid (Publisher)">
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_acid_critical_alarm" VarB="sup_acid_critical_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_acid_error_alarm" VarB="sup_acid_error_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_acid_warning_alarm" VarB="sup_acid_warning_active^Outputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Sup_Barge (Publisher)">
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_barge_critical_alarm" VarB="Sup_Barge_Critical_Active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_barge_error_alarm" VarB="Sup_Barge_Error_Active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_barge_warning_alarm" VarB="Sup_Barge_Warning_Active^Outputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Sup_ED (Publisher)">
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_ed_critical_alarm" VarB="sup_ed_critical_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_ed_error_alarm" VarB="sup_ed_error_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_ed_warning_alarm" VarB="sup_ed_warning_active^Outputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Sup_Prexfer (Publisher)">
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_prexfer_critical_alarm" VarB="sup_prexfer_critical_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_prexfer_error_alarm" VarB="sup_prexfer_error_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_prexfer_warning_alarm" VarB="sup_prexfer_warning_active^Outputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Sup_ProdXfer (Publisher)">
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_prodxfer_critical_alarm" VarB="sup_prodxfer_critical_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_prodxfer_error_alarm" VarB="sup_prodxfer_error_active^Outputs^VarData"/>
+				<Link VarA="PlcTask Outputs^eap_mapping.sup_prodxfer_warning_alarm" VarB="sup_prodxfer_warning_active^Outputs^VarData"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
 </TcSmItem>

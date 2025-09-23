@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="eap_mapping" Id="{b1348b4a-474f-4daf-a81d-afc617718508}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM eap_mapping
+VAR
+//--- EAP Mapping should be done at the device level - mapping should not need to change after creation -----------
+	//--- Inputs --------------------------------------------------------------------------------------------------	
+	
+	barge_warning_alarm AT %I* : BOOL;
+	barge_error_alarm AT %I* : BOOL;
+	barge_critical_alarm AT %I* : BOOL;
+	
+	prodxfer_warning_alarm AT %I* : BOOL;
+	prodxfer_error_alarm AT %I* : BOOL;
+	prodxfer_critical_alarm AT %I* : BOOL;
+	
+	acid_warning_alarm AT %I* : BOOL;
+	acid_error_alarm AT %I* : BOOL;
+	acid_critical_alarm AT %I* : BOOL;
+	
+	ed_warning_alarm AT %I* : BOOL;
+	ed_error_alarm AT %I* : BOOL;
+	ed_critical_alarm AT %I* : BOOL;
+	
+	prexfer_warning_alarm AT %I* : BOOL;
+	prexfer_error_alarm AT %I* : BOOL;
+	prexfer_critical_alarm AT %I* : BOOL;
+	
+	//--- Outputs -------------------------------------------------------------------------------------------------
+
+	sup_barge_warning_alarm AT %Q* : BOOL;
+	sup_barge_error_alarm AT %Q* : BOOL;
+	sup_barge_critical_alarm AT %Q* : BOOL;
+	
+	sup_prodxfer_warning_alarm AT %Q* : BOOL;
+	sup_prodxfer_error_alarm AT %Q* : BOOL;
+	sup_prodxfer_critical_alarm AT %Q* : BOOL;
+	
+	sup_acid_warning_alarm AT %Q* : BOOL;
+	sup_acid_error_alarm AT %Q* : BOOL;
+	sup_acid_critical_alarm AT %Q* : BOOL;
+	
+	sup_ed_warning_alarm AT %Q* : BOOL;
+	sup_ed_error_alarm AT %Q* : BOOL;
+	sup_ed_critical_alarm AT %Q* : BOOL;
+	
+	sup_prexfer_warning_alarm AT %Q* : BOOL;
+	sup_prexfer_error_alarm AT %Q* : BOOL;
+	sup_prexfer_critical_alarm AT %Q* : BOOL;
+	
+	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[sup_barge_warning_alarm := alarm_manager.warning_alarm_active;
+sup_barge_error_alarm := alarm_manager.error_alarm_active;
+sup_barge_critical_alarm := alarm_manager.critical_alarm_active;
+	
+sup_prodxfer_warning_alarm := alarm_manager.warning_alarm_active;
+sup_prodxfer_error_alarm := alarm_manager.error_alarm_active;
+sup_prodxfer_critical_alarm := alarm_manager.critical_alarm_active;
+	
+sup_acid_warning_alarm := alarm_manager.warning_alarm_active;
+sup_acid_error_alarm := alarm_manager.error_alarm_active;
+sup_acid_critical_alarm := alarm_manager.critical_alarm_active;
+	
+sup_ed_warning_alarm := alarm_manager.warning_alarm_active;
+sup_ed_error_alarm := alarm_manager.error_alarm_active;
+sup_ed_critical_alarm := alarm_manager.critical_alarm_active;
+	
+sup_prexfer_warning_alarm := alarm_manager.warning_alarm_active;
+sup_prexfer_error_alarm := alarm_manager.error_alarm_active;
+sup_prexfer_critical_alarm := alarm_manager.critical_alarm_active;]]></ST>
+    </Implementation>
+    <LineIds Name="eap_mapping">
+      <LineId Id="180" Count="17" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

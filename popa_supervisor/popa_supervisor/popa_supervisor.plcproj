@@ -30,6 +30,12 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\alarm_manager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\eap_mapping.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\example_loop_control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
