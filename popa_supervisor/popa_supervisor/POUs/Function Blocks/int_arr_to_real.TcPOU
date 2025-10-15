@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="int_arr_to_real" Id="{56fa814f-ee48-47b4-996a-c87c9eef6c38}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK int_arr_to_real
+VAR_INPUT
+	array_pos_0 : WORD;
+	array_pos_1 : WORD;
+END_VAR
+VAR_OUTPUT
+	output : REAL;
+END_VAR
+VAR
+	msb_hex: STRING(255);
+	lsb_hex: STRING(255);
+	concat_hex: STRING(255);
+	cbData: UDINT;
+	hex_byte_data:  ARRAY[0..3] OF BYTE;;
+	uConvert : U_Convert;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[msb_hex := WORD_TO_HEXSTR(in := array_pos_0, iPrecision := 4, bLoCase := FALSE);
+lsb_hex := WORD_TO_HEXSTR(in := array_pos_1, iPrecision := 4, bLoCase := FALSE);	
+
+concat_hex := CONCAT(STR1 := msb_hex , STR2 := lsb_hex );
+
+cbData := HEXSTR_TO_DATA( concat_hex, ADR( hex_byte_data), SIZEOF( hex_byte_data ) );
+			
+uconvert.arrUDP_Data[3] := hex_byte_data[0];
+uconvert.arrUDP_Data[2] := hex_byte_data[1];
+uconvert.arrUDP_Data[1] := hex_byte_data[2];
+uconvert.arrUDP_Data[0] := hex_byte_data[3];
+
+output := uconvert.rReal;]]></ST>
+    </Implementation>
+    <LineIds Name="int_arr_to_real">
+      <LineId Id="10" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="13" Count="4" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -19,6 +19,9 @@
     <Released>false</Released>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\U_Convert.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GVLs\opc.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -40,6 +43,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\faults.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\int_arr_to_real.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\int_arr_to_real_1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\modbus_analog_read.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\heartbeat_routine.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\interlocks.TcPOU">
@@ -75,6 +90,9 @@
     <Compile Include="POUs\general.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\modbus_mapping.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\motor_starter_control_st.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -105,6 +123,9 @@
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="Tc2_ModbusSrv">
+      <DefaultResolution>Tc2_ModbusSrv, * (Beckhoff Automation GmbH)</DefaultResolution>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>

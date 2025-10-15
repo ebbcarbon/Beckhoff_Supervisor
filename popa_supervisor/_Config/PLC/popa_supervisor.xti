@@ -12,7 +12,7 @@
 		</DataType>
 	</DataTypes>
 	<Project GUID="{A69D7AB4-53AC-40E7-8E11-A7DF25BBEC0A}" Name="popa_supervisor" PrjFilePath="..\..\popa_supervisor\popa_supervisor.plcproj" TmcFilePath="..\..\popa_supervisor\popa_supervisor.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" CopyTpyToTarget="false" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="popa_supervisor\popa_supervisor.tmc" TmcHash="{0165EABC-6A05-1E05-9138-AFE785407F74}">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="popa_supervisor\popa_supervisor.tmc" TmcHash="{B2A12557-D53F-A3EE-4A89-EA705E3D7268}">
 			<Name>popa_supervisor Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Vars VarGrpType="1">
@@ -87,6 +87,18 @@
 			</Vars>
 			<Vars VarGrpType="2" AreaNo="1">
 				<Name>PlcTask Outputs</Name>
+				<Var>
+					<Name>general.safety_reset</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>general.safety_error_ack</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>general.safety_run</Name>
+					<Type>BOOL</Type>
+				</Var>
 				<Var>
 					<Name>io_mapping.test_real</Name>
 					<Type>REAL</Type>
@@ -190,7 +202,7 @@
 			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^Barge_Sup (Subscriber)">
 				<Link VarA="PlcTask Inputs^eap_mapping.barge_critical_alarm" VarB="barge_critical_alarm^Inputs^VarData"/>
 				<Link VarA="PlcTask Inputs^eap_mapping.barge_error_alarm" VarB="barge_error_alarm^Inputs^VarData"/>
-				<Link VarA="PlcTask Inputs^eap_mapping.barge_warning_alarm" VarB="barge_warning_alarm^Inputs^VarData"/>
+				<Link VarA="PlcTask Inputs^eap_mapping.barge_warning_alarm" VarB="barge_warning_alarm^Inputs^+"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT Automation Protocol)^ED_Sup (Subscriber)">
 				<Link VarA="PlcTask Inputs^eap_mapping.ed_critical_alarm" VarB="ed_critical_alarm^Inputs^VarData"/>
@@ -231,6 +243,11 @@
 				<Link VarA="PlcTask Outputs^eap_mapping.sup_prodxfer_critical_alarm" VarB="sup_prodxfer_critical_active^Outputs^VarData"/>
 				<Link VarA="PlcTask Outputs^eap_mapping.sup_prodxfer_error_alarm" VarB="sup_prodxfer_error_active^Outputs^VarData"/>
 				<Link VarA="PlcTask Outputs^eap_mapping.sup_prodxfer_warning_alarm" VarB="sup_prodxfer_warning_active^Outputs^VarData"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 5 (EtherCAT)^Term 11 (EK1100)^Term 12 (EL2911)">
+				<Link VarA="PlcTask Outputs^general.safety_error_ack" VarB="StandardOutputs^Standard In Var 1" Size="1"/>
+				<Link VarA="PlcTask Outputs^general.safety_reset" VarB="StandardOutputs^Standard In Var 2" Size="1"/>
+				<Link VarA="PlcTask Outputs^general.safety_run" VarB="StandardOutputs^Standard In Var 4" Size="1"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>

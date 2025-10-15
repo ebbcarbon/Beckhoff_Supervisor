@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="U_Convert" Id="{3c2fdf9e-10ac-48a7-833c-82b6e1205ee3}">
+    <Declaration><![CDATA[TYPE U_Convert :
+UNION
+	arrUDP_Data: ARRAY [0 .. 3] OF BYTE; // Array must start with LSB  
+    rReal : REAL;
+END_UNION
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

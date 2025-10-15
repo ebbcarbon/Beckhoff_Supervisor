@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="modbus_analog_read" Id="{ac1c69a0-e9fd-4dcf-88d9-877d36fa6021}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK modbus_analog_read
+VAR_INPUT
+	
+	ip_addr : STRING;
+	tcp_port : WORD;
+	unit_ID : BYTE;
+
+	
+	timeout: TIME := T#2000MS;
+END_VAR
+VAR_OUTPUT
+	avg_line_to_neutral_voltage	 : REAL;
+	avg_line_to_line_voltage	 : REAL;
+	system_avg_line_current	 : REAL;
+	total_active_power	 : REAL;
+	total_reactive_power	 : REAL;
+	total_apparent_power	 : REAL;
+	total_power_factor	 : REAL;
+	system_frequency	 : REAL;
+
+
+
+	read_error : BOOL;
+	error_id : UDINT;
+	bReadError : BOOL;
+	nReadErrorID : UDINT;
+END_VAR
+VAR
+	modbusReadReg : FB_MBReadRegs;
+	read_reg : BOOL := TRUE;
+	read_regQty : WORD := 16 ;
+	reg_address : WORD;
+	arrayReadDataReg : ARRAY[0..16] OF WORD;
+	msb_hex : STRING; //Modbus register_1 converted word to hex
+	lsb_hex : STRING; //Modbus register_2 converted word to hex
+	concat_hex : STRING; // hex string concatenated together
+	
+
+	avg_line_to_neutral_convert : int_arr_to_real;
+	avg_line_to_line_voltage_convert : int_arr_to_real;
+	system_avg_line_current_convert : int_arr_to_real;
+	total_active_power_convert : int_arr_to_real;
+	total_reactive_power_convert : int_arr_to_real;
+	total_apparent_power_convert : int_arr_to_real;
+	total_power_factor_convert : int_arr_to_real;
+	system_frequency_convert : int_arr_to_real;
+	
+
+	
+	
+	read_frequency : TON;
+	read_exec : BOOL;
+	read_pause : TON;
+	count : INT;
+	
+	cbData: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[read_frequency();
+read_pause();
+read_pause.PT := T#100MS;
+read_frequency.PT := T#200MS;
+IF read_reg 
+THEN
+	IF (read_frequency.Q = 0) AND (read_pause.Q = 0)
+		THEN
+			read_frequency.IN := TRUE;
+			read_exec := TRUE;
+	ELSIF read_frequency.Q AND (read_pause.Q = 0)
+		THEN
+			read_exec := FALSE;
+			read_pause.IN := TRUE;
+	ELSIF read_frequency.Q AND read_pause.Q
+		THEN
+			read_frequency.IN := FALSE;
+			read_pause.IN := FALSE;
+			read_exec := FALSE;	
+			count:= count + 1;
+	END_IF;
+END_IF;
+
+IF count > 1
+	THEN
+	count := 0;
+END_IF
+
+CASE count OF
+	1:
+		reg_address := 27136;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(arrayReadDataReg), 
+			pDestAddr:= ADR(arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+
+	avg_line_to_neutral_convert(array_pos_0 := arrayReadDataReg[0], array_pos_1 := arrayReadDataReg[1], output => avg_line_to_neutral_voltage);
+	avg_line_to_line_voltage_convert(array_pos_0 := arrayReadDataReg[2], array_pos_1 := arrayReadDataReg[3], output => avg_line_to_line_voltage);
+	system_avg_line_current_convert(array_pos_0 := arrayReadDataReg[4], array_pos_1 := arrayReadDataReg[5], output => system_avg_line_current);
+	total_active_power_convert(array_pos_0 := arrayReadDataReg[6], array_pos_1 := arrayReadDataReg[7], output => total_active_power);
+	total_reactive_power_convert(array_pos_0 := arrayReadDataReg[8], array_pos_1 := arrayReadDataReg[9], output => total_reactive_power);
+	total_apparent_power_convert(array_pos_0 := arrayReadDataReg[10], array_pos_1 := arrayReadDataReg[11], output => total_apparent_power);
+	total_power_factor_convert(array_pos_0 := arrayReadDataReg[12], array_pos_1 := arrayReadDataReg[13], output => total_power_factor);
+	system_frequency_convert(array_pos_0 := arrayReadDataReg[14], array_pos_1 := arrayReadDataReg[15], output => system_frequency);
+(*	avg_line_to_neutral_convert()	 := arrayReadDataReg[0];
+	avg_line_to_line_voltage	 := arrayReadDataReg[1];
+	system_avg_line_current	 := arrayReadDataReg[2];
+	total_active_power	 := arrayReadDataReg[3];
+	total_reactive_power	 := arrayReadDataReg[4];
+	total_apparent_power	 := arrayReadDataReg[5];
+	total_power_factor	 := arrayReadDataReg[6];
+	system_frequency	 := arrayReadDataReg[7];
+	*)		
+//		END_IF
+(*		
+		temp_output := temp_uconvert.rReal;
+	2:
+		reg_address := depth_reg_address;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(depth_arrayReadDataReg), 
+			pDestAddr:= ADR(depth_arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+	//	IF NOT (depth_read_error)
+//			THEN
+			//depth_arrayReadDataReg := arrayReadDataReg;
+			depth_msb_hex := WORD_TO_HEXSTR(in:= depth_arrayReadDataReg[0], iPrecision:= 4, bLoCase:= FALSE);
+			depth_lsb_hex := WORD_TO_HEXSTR(in:= depth_arrayReadDataReg[1], iPrecision:= 4, bLoCase:= FALSE);	
+			depth_concat_hex := CONCAT(STR1:=depth_msb_hex , STR2:=depth_lsb_hex );
+			depth_cbData := HEXSTR_TO_DATA( depth_concat_hex, ADR( depth_hex_byte_data), SIZEOF( depth_hex_byte_data ) );
+			
+			depth_uconvert.arrUDP_Data[3] := depth_hex_byte_data[0];
+			depth_uconvert.arrUDP_Data[2] := depth_hex_byte_data[1];
+			depth_uconvert.arrUDP_Data[1] := depth_hex_byte_data[2];
+			depth_uconvert.arrUDP_Data[0] := depth_hex_byte_data[3];
+//		END_IF
+
+		
+		depth_output := depth_uconvert.rReal;
+	3:
+		reg_address := conductivity_reg_address;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(conductivity_arrayReadDataReg), 
+			pDestAddr:= ADR(conductivity_arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+//		IF NOT (conductivity_read_error)
+//			THEN
+			//conductivity_arrayReadDataReg := arrayReadDataReg;
+			conductivity_msb_hex := WORD_TO_HEXSTR(in:= conductivity_arrayReadDataReg[0], iPrecision:= 4, bLoCase:= FALSE);
+			conductivity_lsb_hex := WORD_TO_HEXSTR(in:= conductivity_arrayReadDataReg[1], iPrecision:= 4, bLoCase:= FALSE);	
+			conductivity_concat_hex := CONCAT(STR1:=conductivity_msb_hex , STR2:=conductivity_lsb_hex );
+			conductivity_cbData := HEXSTR_TO_DATA( conductivity_concat_hex, ADR( conductivity_hex_byte_data), SIZEOF( conductivity_hex_byte_data ) );
+			
+			conductivity_uconvert.arrUDP_Data[3] := conductivity_hex_byte_data[0];
+			conductivity_uconvert.arrUDP_Data[2] := conductivity_hex_byte_data[1];
+			conductivity_uconvert.arrUDP_Data[1] := conductivity_hex_byte_data[2];
+			conductivity_uconvert.arrUDP_Data[0] := conductivity_hex_byte_data[3];
+//		END_IF
+		
+		
+		conductivity_output := conductivity_uconvert.rReal;
+	4:
+		reg_address := do_reg_address;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(do_arrayReadDataReg), 
+			pDestAddr:= ADR(do_arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+	//	IF NOT (do_read_error)
+//			THEN
+			//do_arrayReadDataReg := arrayReadDataReg;
+			do_msb_hex := WORD_TO_HEXSTR(in:= do_arrayReadDataReg[0], iPrecision:= 4, bLoCase:= FALSE);
+			do_lsb_hex := WORD_TO_HEXSTR(in:= do_arrayReadDataReg[1], iPrecision:= 4, bLoCase:= FALSE);	
+			do_concat_hex := CONCAT(STR1:=do_msb_hex , STR2:=do_lsb_hex );
+			do_cbData := HEXSTR_TO_DATA( do_concat_hex, ADR( do_hex_byte_data), SIZEOF( do_hex_byte_data ) );
+			
+			do_uconvert.arrUDP_Data[3] := do_hex_byte_data[0];
+			do_uconvert.arrUDP_Data[2] := do_hex_byte_data[1];
+			do_uconvert.arrUDP_Data[1] := do_hex_byte_data[2];
+			do_uconvert.arrUDP_Data[0] := do_hex_byte_data[3];
+//		END_IF
+		
+		
+		do_output := do_uconvert.rReal;
+	5:
+		reg_address := ph_reg_address;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(ph_arrayReadDataReg), 
+			pDestAddr:= ADR(ph_arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+	//	IF NOT ph_read_error
+	//		THEN
+			//ph_arrayReadDataReg := arrayReadDataReg;
+			ph_msb_hex := WORD_TO_HEXSTR(in:= ph_arrayReadDataReg[0], iPrecision:= 4, bLoCase:= FALSE);
+			ph_lsb_hex := WORD_TO_HEXSTR(in:= ph_arrayReadDataReg[1], iPrecision:= 4, bLoCase:= FALSE);	
+			ph_concat_hex := CONCAT(STR1:=ph_msb_hex , STR2:=ph_lsb_hex );
+			ph_cbData := HEXSTR_TO_DATA( ph_concat_hex, ADR( ph_hex_byte_data), SIZEOF( ph_hex_byte_data ) );
+			
+			ph_uconvert.arrUDP_Data[3] := ph_hex_byte_data[0];
+			ph_uconvert.arrUDP_Data[2] := ph_hex_byte_data[1];
+			ph_uconvert.arrUDP_Data[1] := ph_hex_byte_data[2];
+			ph_uconvert.arrUDP_Data[0] := ph_hex_byte_data[3];
+	//	END_IF
+		
+		
+		ph_output := ph_uconvert.rReal;
+	6:
+		reg_address := turbidity_reg_address;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(turbidity_arrayReadDataReg), 
+			pDestAddr:= ADR(turbidity_arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+	//	IF NOT (turbidity_read_error)
+	//		THEN
+			//turbidity_arrayReadDataReg := arrayReadDataReg;
+			turbidity_msb_hex := WORD_TO_HEXSTR(in:= turbidity_arrayReadDataReg[0], iPrecision:= 4, bLoCase:= FALSE);
+			turbidity_lsb_hex := WORD_TO_HEXSTR(in:= turbidity_arrayReadDataReg[1], iPrecision:= 4, bLoCase:= FALSE);	
+			turbidity_concat_hex := CONCAT(STR1:=turbidity_msb_hex , STR2:=turbidity_lsb_hex );
+			turbidity_cbData := HEXSTR_TO_DATA( turbidity_concat_hex, ADR( turbidity_hex_byte_data), SIZEOF( turbidity_hex_byte_data ) );
+			
+			turbidity_uconvert.arrUDP_Data[3] := turbidity_hex_byte_data[0];
+			turbidity_uconvert.arrUDP_Data[2] := turbidity_hex_byte_data[1];
+			turbidity_uconvert.arrUDP_Data[1] := turbidity_hex_byte_data[2];
+			turbidity_uconvert.arrUDP_Data[0] := turbidity_hex_byte_data[3];
+		
+	//	END_IF
+
+		turbidity_output := turbidity_uconvert.rReal;
+	7:
+		reg_address := voltage_reg_address;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(voltage_arrayReadDataReg), 
+			pDestAddr:= ADR(voltage_arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+//		IF NOT (voltage_read_error)
+//			THEN
+			//voltage_arrayReadDataReg := arrayReadDataReg;
+			voltage_msb_hex := WORD_TO_HEXSTR(in:= voltage_arrayReadDataReg[0], iPrecision:= 4, bLoCase:= FALSE);
+			voltage_lsb_hex := WORD_TO_HEXSTR(in:= voltage_arrayReadDataReg[1], iPrecision:= 4, bLoCase:= FALSE);	
+			voltage_concat_hex := CONCAT(STR1:=voltage_msb_hex , STR2:=voltage_lsb_hex );
+			voltage_cbData := HEXSTR_TO_DATA( voltage_concat_hex, ADR( voltage_hex_byte_data), SIZEOF( voltage_hex_byte_data ) );
+			
+			voltage_uconvert.arrUDP_Data[3] := voltage_hex_byte_data[0];
+			voltage_uconvert.arrUDP_Data[2] := voltage_hex_byte_data[1];
+			voltage_uconvert.arrUDP_Data[1] := voltage_hex_byte_data[2];
+			voltage_uconvert.arrUDP_Data[0] := voltage_hex_byte_data[3];
+//		END_IF
+		
+		
+		voltage_output := voltage_uconvert.rReal;
+	8:
+		reg_address := battery_reg_address;
+		modbusReadReg(
+			sIPAddr:= ip_addr, 
+			nTCPPort:= tcp_port, 
+			nUnitID:= unit_ID, 
+			nQuantity:= read_regQty, 
+			nMBAddr:= reg_address, 
+			cbLength:= SIZEOF(battery_arrayReadDataReg), 
+			pDestAddr:= ADR(battery_arrayReadDataReg), 
+			bExecute:= read_frequency.Q, 
+			tTimeout:= timeout, 
+			bBusy=> , 
+			bError=> read_error, 
+			nErrId=> error_id, 
+			cbRead=> 
+		);
+//		IF not battery_read_error
+//			THEN
+			//battery_arrayReadDataReg := arrayReadDataReg;
+			battery_msb_hex := WORD_TO_HEXSTR(in:= battery_arrayReadDataReg[0], iPrecision:= 4, bLoCase:= FALSE);
+			battery_lsb_hex := WORD_TO_HEXSTR(in:= battery_arrayReadDataReg[1], iPrecision:= 4, bLoCase:= FALSE);	
+			battery_concat_hex := CONCAT(STR1:=battery_msb_hex , STR2:=battery_lsb_hex );
+			battery_cbData := HEXSTR_TO_DATA( battery_concat_hex, ADR( battery_hex_byte_data), SIZEOF( battery_hex_byte_data ) );
+			
+			battery_uconvert.arrUDP_Data[3] := battery_hex_byte_data[0];
+			battery_uconvert.arrUDP_Data[2] := battery_hex_byte_data[1];
+			battery_uconvert.arrUDP_Data[1] := battery_hex_byte_data[2];
+			battery_uconvert.arrUDP_Data[0] := battery_hex_byte_data[3];
+	//	END_IF
+		
+		
+		battery_output := battery_uconvert.rReal;
+*)	
+END_CASE
+
+	
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="modbus_analog_read">
+      <LineId Id="79" Count="0" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="95" Count="1" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="107" Count="2" />
+      <LineId Id="308" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="312" Count="0" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="318" Count="0" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="340" Count="13" />
+      <LineId Id="339" Count="0" />
+      <LineId Id="829" Count="0" />
+      <LineId Id="675" Count="0" />
+      <LineId Id="838" Count="6" />
+      <LineId Id="811" Count="5" />
+      <LineId Id="684" Count="0" />
+      <LineId Id="817" Count="0" />
+      <LineId Id="581" Count="0" />
+      <LineId Id="674" Count="0" />
+      <LineId Id="338" Count="0" />
+      <LineId Id="328" Count="0" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="355" Count="15" />
+      <LineId Id="583" Count="1" />
+      <LineId Id="665" Count="8" />
+      <LineId Id="664" Count="0" />
+      <LineId Id="582" Count="0" />
+      <LineId Id="380" Count="1" />
+      <LineId Id="354" Count="0" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="383" Count="15" />
+      <LineId Id="586" Count="1" />
+      <LineId Id="655" Count="8" />
+      <LineId Id="654" Count="0" />
+      <LineId Id="585" Count="0" />
+      <LineId Id="408" Count="1" />
+      <LineId Id="382" Count="0" />
+      <LineId Id="410" Count="0" />
+      <LineId Id="440" Count="15" />
+      <LineId Id="589" Count="1" />
+      <LineId Id="645" Count="8" />
+      <LineId Id="644" Count="0" />
+      <LineId Id="588" Count="0" />
+      <LineId Id="465" Count="1" />
+      <LineId Id="439" Count="0" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="468" Count="15" />
+      <LineId Id="592" Count="1" />
+      <LineId Id="635" Count="8" />
+      <LineId Id="634" Count="0" />
+      <LineId Id="591" Count="0" />
+      <LineId Id="493" Count="1" />
+      <LineId Id="467" Count="0" />
+      <LineId Id="323" Count="0" />
+      <LineId Id="496" Count="15" />
+      <LineId Id="595" Count="1" />
+      <LineId Id="624" Count="9" />
+      <LineId Id="623" Count="0" />
+      <LineId Id="594" Count="0" />
+      <LineId Id="522" Count="0" />
+      <LineId Id="495" Count="0" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="524" Count="15" />
+      <LineId Id="598" Count="1" />
+      <LineId Id="614" Count="8" />
+      <LineId Id="613" Count="0" />
+      <LineId Id="597" Count="0" />
+      <LineId Id="549" Count="1" />
+      <LineId Id="523" Count="0" />
+      <LineId Id="325" Count="0" />
+      <LineId Id="552" Count="15" />
+      <LineId Id="601" Count="1" />
+      <LineId Id="604" Count="8" />
+      <LineId Id="603" Count="0" />
+      <LineId Id="600" Count="0" />
+      <LineId Id="577" Count="1" />
+      <LineId Id="551" Count="0" />
+      <LineId Id="316" Count="1" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="62" Count="1" />
+      <LineId Id="61" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

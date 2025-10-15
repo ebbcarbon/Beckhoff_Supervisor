@@ -9,21 +9,21 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF(eap_mapping.barge_warning_alarm OR eap_mapping.prexfer_warning_alarm OR eap_mapping.ed_warning_alarm OR eap_mapping.prodxfer_warning_alarm OR eap_mapping.acid_warning_alarm)
+      <ST><![CDATA[IF(eap_mapping.barge_warning_alarm AND eap_mapping.prexfer_warning_alarm AND eap_mapping.ed_warning_alarm AND eap_mapping.prodxfer_warning_alarm AND eap_mapping.acid_warning_alarm)
 	THEN
 	warning_alarm_active := 1;
 	ELSE
 		warning_alarm_active := 0;
 END_IF
 
-IF(eap_mapping.barge_error_alarm OR eap_mapping.prexfer_error_alarm OR eap_mapping.ed_error_alarm OR eap_mapping.prodxfer_error_alarm OR eap_mapping.acid_error_alarm)
+IF(eap_mapping.barge_error_alarm AND eap_mapping.prexfer_error_alarm AND eap_mapping.ed_error_alarm AND eap_mapping.prodxfer_error_alarm AND eap_mapping.acid_error_alarm)
 	THEN
 	error_alarm_active := 1;
 	ELSE
 		error_alarm_active := 0;
 END_IF
 
-IF(eap_mapping.barge_critical_alarm OR eap_mapping.prexfer_critical_alarm OR eap_mapping.ed_critical_alarm OR eap_mapping.prodxfer_critical_alarm OR eap_mapping.acid_critical_alarm)
+IF(eap_mapping.barge_critical_alarm AND eap_mapping.prexfer_critical_alarm AND eap_mapping.ed_critical_alarm AND eap_mapping.prodxfer_critical_alarm AND eap_mapping.acid_critical_alarm) OR (opc.popa_supervisor_safety_reset)
 	THEN
 	critical_alarm_active := 1;
 	ELSE

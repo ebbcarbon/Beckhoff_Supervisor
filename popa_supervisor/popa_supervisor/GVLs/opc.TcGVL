@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <GVL Name="opc" Id="{674fd3be-a48d-4a85-a2e2-bd0824412020}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
-{attribute 'global_init_slot' := '50500'}
+{attribute ‘OPC.UA.DA’ := ‘1’}//{attribute 'global_init_slot' := '50500'}
 VAR_GLOBAL PERSISTENT
 	//These tags are created here because you cannot write directly to local scoped tags(cpt_3144) from outside the POU
 	//They are created here then mapped to the local variables in the POU
@@ -10,7 +10,7 @@ VAR_GLOBAL PERSISTENT
 	//Tags that are ONLY being read from the HMI have their values set in the opc_mapping program
 		
 	//State request INT from the HMI
-	{attribute 'OPC.UA.DA' :='1'}
+(*	{attribute 'OPC.UA.DA' :='1'}
 	popa_0200_hmi_state_request : INT;
 	
 	//Current Supervisor State
@@ -166,10 +166,223 @@ VAR_GLOBAL PERSISTENT
 	popa_0081_cpt_3144_eu_max : REAL;
 	//Filter factor value for analog input
 	{attribute 'OPC.UA.DA' :='1'}
-	popa_0081_cpt_3144_filter_factor : REAL;
+	popa_0081_cpt_3144_filter_factor : REAL;*)
 	//Scaled value for analog input
 //	{attribute 'OPC.UA.DA' :='1'}
 //	popa_0081_cpt_3144_scaled_value : REAL;
+	
+	//--- Safety ---------------------------------------------------------------------------------------------------
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_safety_reset : BOOL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_estop_active : BOOL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_barge_safety_triggered : BOOL;
+
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_ptt_safety_triggered : BOOL;
+
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_ed_safety_triggered : BOOL;
+
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_pdt_safety_triggered : BOOL;
+
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_acid_safety_triggered : BOOL;
+
+
+	//--- Macoma Power Meters --------------------------------------------------------------------------------------
+
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3710_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3715_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2710_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2715_system_frequency_scaled_value : REAL;
+	
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2720_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2725_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_2730_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_3720_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1720_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_4710_system_frequency_scaled_value : REAL;
+	
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_line_to_neutral_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_line_to_line_voltage_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_avg_line_current_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_total_active_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_total_reactive_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_total_apparent_power_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_total_power_factor_scaled_value : REAL;
+	{attribute 'OPC.UA.DA' :='1'}
+	popa_supervisor_kt_1725_system_frequency_scaled_value : REAL;
 
 
 END_VAR]]></Declaration>

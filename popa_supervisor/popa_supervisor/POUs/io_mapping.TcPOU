@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="io_mapping" Id="{87c33c1f-405d-4536-940a-0d0026912d98}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM io_mapping
 VAR PERSISTENT
@@ -17,7 +17,7 @@ VAR PERSISTENT
 
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Instantiate Example analog input function block
+      <ST><![CDATA[(*//Instantiate Example analog input function block
 cpt_3144();
 
 //Map values from the OPC GVL so that they can be written to from outside POU(IE from HMI)
@@ -33,11 +33,15 @@ sine_wave:=sine_wave+0.001;
 IF (sine_wave>(2*pi)) THEN
 	sine_wave:=0;
 END_IF
-
+*)
 publisharray[0]:=sine_wave;
 publisharray[1]:=sine_wave/2;
 publisharray[2]:=sine_wave*2;
 ]]></ST>
     </Implementation>
+    <LineIds Name="io_mapping">
+      <LineId Id="3" Count="19" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
