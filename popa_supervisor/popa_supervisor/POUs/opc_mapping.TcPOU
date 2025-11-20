@@ -7,6 +7,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//This program maps values from the local variable to the OPC readable tag.
+// --- Hearbeat ------------------------------------------------------------------------------------------------------------------------------------
+opc.popa_supervisor_opc_bridge_heartbeat := NOT(heartbeat_routine.opc_heartbeat_error);
 
 // --- Safety Logging ------------------------------------------------------------------------------------------------------------------------------
 opc.popa_supervisor_barge_safety_triggered := eap_mapping.barge_critical_alarm;
@@ -200,11 +202,64 @@ opc.popa_supervisor_kt_1725_total_apparent_power_scaled_value := modbus_mapping.
 
 opc.popa_supervisor_kt_1725_total_power_factor_scaled_value := modbus_mapping.barge_power_meter_modbus_read.total_power_factor;
 
-opc.popa_supervisor_kt_1725_system_frequency_scaled_value := modbus_mapping.barge_power_meter_modbus_read.system_frequency;]]></ST>
+opc.popa_supervisor_kt_1725_system_frequency_scaled_value := modbus_mapping.barge_power_meter_modbus_read.system_frequency;
+
+
+opc.popa_supervisor_kt_1715_line_to_neutral_voltage_scaled_value := modbus_mapping.electrical_shed_power_meter.avg_line_to_neutral_voltage;
+
+opc.popa_supervisor_kt_1715_line_to_line_voltage_scaled_value := modbus_mapping.electrical_shed_power_meter.avg_line_to_line_voltage;
+
+opc.popa_supervisor_kt_1715_avg_line_current_scaled_value := modbus_mapping.electrical_shed_power_meter.system_avg_line_current;
+
+opc.popa_supervisor_kt_1715_total_active_power_scaled_value := modbus_mapping.electrical_shed_power_meter.total_active_power;
+
+opc.popa_supervisor_kt_1715_total_reactive_power_scaled_value := modbus_mapping.electrical_shed_power_meter.total_reactive_power;
+
+opc.popa_supervisor_kt_1715_total_apparent_power_scaled_value := modbus_mapping.electrical_shed_power_meter.total_apparent_power;
+
+opc.popa_supervisor_kt_1715_total_power_factor_scaled_value := modbus_mapping.electrical_shed_power_meter.total_power_factor;
+
+opc.popa_supervisor_kt_1715_system_frequency_scaled_value := modbus_mapping.electrical_shed_power_meter.system_frequency;
+
+opc.popa_supervisor_kt_1715_ground_current_scaled_value := modbus_mapping.electrical_shed_power_meter.ground_current;
+
+opc.popa_supervisor_kt_1715_current_capacity_scaled_value := modbus_mapping.electrical_shed_power_meter.avg_current_capacity;
+
+opc.popa_supervisor_kt_1715_power_factor_leading_scaled_value := modbus_mapping.electrical_shed_power_meter.power_factor_leading;
+
+opc.popa_supervisor_kt_1715_power_factor_lagging_scaled_value := modbus_mapping.electrical_shed_power_meter.power_factor_lagging;
+
+
+
+opc.popa_supervisor_kt_1710_line_to_neutral_voltage_scaled_value := modbus_mapping.electrical_bunker_power_meter.avg_line_to_neutral_voltage;
+
+opc.popa_supervisor_kt_1710_line_to_line_voltage_scaled_value := modbus_mapping.electrical_bunker_power_meter.avg_line_to_line_voltage;
+
+opc.popa_supervisor_kt_1710_avg_line_current_scaled_value := modbus_mapping.electrical_bunker_power_meter.system_avg_line_current;
+
+opc.popa_supervisor_kt_1710_total_active_power_scaled_value := modbus_mapping.electrical_bunker_power_meter.total_active_power;
+
+opc.popa_supervisor_kt_1710_total_reactive_power_scaled_value := modbus_mapping.electrical_bunker_power_meter.total_reactive_power;
+
+opc.popa_supervisor_kt_1710_total_apparent_power_scaled_value := modbus_mapping.electrical_bunker_power_meter.total_apparent_power;
+
+opc.popa_supervisor_kt_1710_total_power_factor_scaled_value := modbus_mapping.electrical_bunker_power_meter.total_power_factor;
+
+opc.popa_supervisor_kt_1710_system_frequency_scaled_value := modbus_mapping.electrical_bunker_power_meter.system_frequency;
+
+opc.popa_supervisor_kt_1710_ground_current_scaled_value := modbus_mapping.electrical_bunker_power_meter.ground_current;
+
+opc.popa_supervisor_kt_1710_current_capacity_scaled_value := modbus_mapping.electrical_bunker_power_meter.avg_current_capacity;
+
+opc.popa_supervisor_kt_1710_power_factor_leading_scaled_value := modbus_mapping.electrical_bunker_power_meter.power_factor_leading;
+
+opc.popa_supervisor_kt_1710_power_factor_lagging_scaled_value := modbus_mapping.electrical_bunker_power_meter.power_factor_lagging;
+]]></ST>
     </Implementation>
     <LineIds Name="opc_mapping">
       <LineId Id="3" Count="0" />
       <LineId Id="753" Count="0" />
+      <LineId Id="841" Count="1" />
       <LineId Id="751" Count="0" />
       <LineId Id="755" Count="1" />
       <LineId Id="759" Count="0" />
@@ -215,6 +270,13 @@ opc.popa_supervisor_kt_1725_system_frequency_scaled_value := modbus_mapping.barg
       <LineId Id="391" Count="15" />
       <LineId Id="576" Count="167" />
       <LineId Id="2" Count="0" />
+      <LineId Id="764" Count="15" />
+      <LineId Id="763" Count="0" />
+      <LineId Id="781" Count="6" />
+      <LineId Id="780" Count="0" />
+      <LineId Id="813" Count="24" />
+      <LineId Id="812" Count="0" />
+      <LineId Id="788" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

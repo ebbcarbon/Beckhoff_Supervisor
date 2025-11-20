@@ -22,11 +22,11 @@
     <Compile Include="DUTs\U_Convert.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GVLs\opc.TcGVL">
+    <Compile Include="GVLs\heartbeat.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="GVLs\plccomms.TcGVL">
+    <Compile Include="GVLs\opc.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -52,6 +52,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Function Blocks\modbus_analog_read.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\schneider_modbus_read.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\heartbeat_routine.TcPOU">

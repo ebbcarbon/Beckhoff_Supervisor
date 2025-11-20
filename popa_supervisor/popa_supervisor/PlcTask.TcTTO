@@ -40,6 +40,9 @@
     <PouCall>
       <Name>modbus_mapping</Name>
     </PouCall>
+    <PouCall>
+      <Name>heartbeat_routine</Name>
+    </PouCall>
     <TaskFBGuid>{b444c442-1e08-4dc9-9582-92f769dd2481}</TaskFBGuid>
     <Fb_init>{577a81fe-f5e0-461c-b354-40a78c1bce7d}</Fb_init>
     <Fb_exit>{7b6bfdd9-ca55-4690-a605-db211c8d1914}</Fb_exit>

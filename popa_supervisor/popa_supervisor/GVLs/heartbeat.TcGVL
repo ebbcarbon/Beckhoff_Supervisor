@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
-  <GVL Name="plccomms" Id="{6a0e60fc-a0d6-45e8-8d70-26ce064edc76}">
+  <GVL Name="heartbeat" Id="{c177fba1-82db-4009-ade4-95c277f10d8f}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
-VAR_GLOBAL PERSISTENT
-
+VAR_GLOBAL
+	//OPC Bridge Heartbeat -- Logic found in heartbeat routine
+	{attribute 'OPC.UA.DA' :='1'}
+	opc_bridge_heartbeat : INT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

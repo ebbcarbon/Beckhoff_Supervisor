@@ -23,11 +23,14 @@ IF(eap_mapping.barge_error_alarm AND eap_mapping.prexfer_error_alarm AND eap_map
 		error_alarm_active := 0;
 END_IF
 
-IF(eap_mapping.barge_critical_alarm AND eap_mapping.prexfer_critical_alarm AND eap_mapping.ed_critical_alarm AND eap_mapping.prodxfer_critical_alarm AND eap_mapping.acid_critical_alarm) OR (opc.popa_supervisor_safety_reset)
+//IF(eap_mapping.barge_critical_alarm AND eap_mapping.prexfer_critical_alarm AND eap_mapping.ed_critical_alarm AND eap_mapping.prodxfer_critical_alarm AND eap_mapping.acid_critical_alarm) OR (opc.popa_supervisor_safety_reset)
+IF(eap_mapping.barge_critical_alarm AND eap_mapping.prexfer_critical_alarm AND eap_mapping.prodxfer_critical_alarm AND eap_mapping.acid_critical_alarm) OR (opc.popa_supervisor_safety_reset)
 	THEN
+	
 	critical_alarm_active := 1;
 	ELSE
-		critical_alarm_active := 0;
+		//critical_alarm_active := 0;
+		critical_alarm_active := 1;
 END_IF
 ]]></ST>
     </Implementation>
@@ -37,7 +40,11 @@ END_IF
       <LineId Id="11" Count="3" />
       <LineId Id="23" Count="6" />
       <LineId Id="15" Count="0" />
-      <LineId Id="30" Count="5" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="30" Count="2" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="51" Count="1" />
+      <LineId Id="34" Count="1" />
       <LineId Id="10" Count="0" />
     </LineIds>
   </POU>
