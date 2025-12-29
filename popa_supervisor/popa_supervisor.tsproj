@@ -1279,8 +1279,8 @@
 						</Var>
 					</Vars>
 					<Eap Publisher="0a3c01690601" Mac="010105040000">
-						<EapVar Id="10" NvId="24" NvLength="1">
-							<Name>prodxfer_warning_alarm</Name>
+						<EapVar Id="12" NvId="29" NvLength="1">
+							<Name>prodxfer_critical_alarm</Name>
 							<ImageId>98</ImageId>
 							<Vars VarGrpType="1">
 								<Name>Inputs</Name>
@@ -1321,7 +1321,7 @@
 								</Var>
 							</Vars>
 						</EapVar>
-						<EapVar Id="11" NvId="28" NvLength="1">
+						<EapVar Id="10" NvId="1" NvLength="1">
 							<Name>prodxfer_error_alarm</Name>
 							<ImageId>98</ImageId>
 							<Vars VarGrpType="1">
@@ -1363,8 +1363,8 @@
 								</Var>
 							</Vars>
 						</EapVar>
-						<EapVar Id="12" NvId="29" NvLength="1">
-							<Name>prodxfer_critical_alarm</Name>
+						<EapVar Id="11" NvId="2" NvLength="1">
+							<Name>prodxfer_warning_alarm</Name>
 							<ImageId>98</ImageId>
 							<Vars VarGrpType="1">
 								<Name>Inputs</Name>

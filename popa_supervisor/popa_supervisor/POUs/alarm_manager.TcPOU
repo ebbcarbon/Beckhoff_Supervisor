@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
   <POU Name="alarm_manager" Id="{31e7dc68-7868-4924-b677-b9cf9a782781}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM alarm_manager
 VAR
@@ -16,7 +16,8 @@ END_VAR
 		warning_alarm_active := 0;
 END_IF
 
-IF(eap_mapping.barge_error_alarm AND eap_mapping.prexfer_error_alarm AND eap_mapping.ed_error_alarm AND eap_mapping.prodxfer_error_alarm AND eap_mapping.acid_error_alarm)
+//IF(eap_mapping.barge_error_alarm AND eap_mapping.prexfer_error_alarm AND eap_mapping.ed_error_alarm AND eap_mapping.prodxfer_error_alarm AND eap_mapping.acid_error_alarm)
+IF(eap_mapping.barge_error_alarm AND eap_mapping.prexfer_error_alarm AND eap_mapping.prodxfer_error_alarm AND eap_mapping.acid_error_alarm)
 	THEN
 	error_alarm_active := 1;
 	ELSE
@@ -38,7 +39,9 @@ END_IF
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="11" Count="3" />
-      <LineId Id="23" Count="6" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="25" Count="4" />
       <LineId Id="15" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="30" Count="2" />
